@@ -1,56 +1,12 @@
-﻿body {
+﻿html, body {
+    height: 100%;
+}
+
+body {
     padding-top: 70px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.container, .container-fluid {
+    height: 100%;
 }
-
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
-
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
-
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
-}
-
-.splash {
-    text-align: center;
-    margin: 10% 0 0 0;
-    height: 100vh;
-}
-
-    .splash .message {
-        font-size: 5em;
-        line-height: 1.5em;
-        -webkit-text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;
-        text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;
-        text-transform: uppercase;
-    }
-
-    .splash .fa-spinner {
-        text-align: center;
-        display: inline-block;
-        font-size: 5em;
-        margin-top: 50px;
-    }

@@ -1,20 +1,19 @@
 ﻿<template>
-    <section class="au-animate">
-        <h2>${heading}</h2>
-        <form role="form" submit.delegate="submit()">
-            <div class="form-group">
-                <label for="fn">First Name</label>
-                <input type="text" value.bind="firstName" class="form-control" id="fn" placeholder="first name">
+    <style type="text/css">
+        .card:hover, .card:focus, .card:active {
+            background-color: #FBC02D;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="card-deck">
+        <div repeat.for="assembly of assemblies" id="${assembly.Id}" class="card">
+            <a href='#assembly/${assembly.Id}' style='position: absolute; top: 0; left: 0; height: 100%; width: 100%;'></a>
+            <div class="card-body">
+                <h4 class="card-title">${assembly.Name}</h4>
+                <p class="card-text">${assembly.FullName}</p>
+                <a class="card-link" route-href="route: assembly; params.bind: { id: assembly.Id }" title="${assembly.Name}">View</a>
             </div>
-            <div class="form-group">
-                <label for="ln">Last Name</label>
-                <input type="text" value.bind="lastName" class="form-control" id="ln" placeholder="last name">
-            </div>
-            <div class="form-group">
-                <label>Full Name</label>
-                <p class="help-block">${fullName | upper}</p>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </section>
+        </div>
+    </div>
 </template>
