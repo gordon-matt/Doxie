@@ -1,0 +1,16 @@
+﻿<template>
+    <require from='/aurelia-app/nav-bar'></require>
+
+    <nav-bar router.bind="router"></nav-bar>
+
+    <div class="container body-content">
+        <div class="page-host">
+            <router-view></router-view>
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Some Copyright Here</p>
+        </footer>
+    </div>
+
+</template>
