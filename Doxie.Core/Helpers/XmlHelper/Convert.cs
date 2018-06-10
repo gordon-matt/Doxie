@@ -376,6 +376,13 @@ namespace Doxie.Core.Helpers.XmlHelper
             namePosition = builder.Length;
             builder.Append(member.Name);
 
+            var methodInfo = member as MethodInfo;
+            if (methodInfo != null && methodInfo.IsGenericMethod)
+            {
+                builder.Append("``");
+                builder.Append(methodInfo.GetGenericArguments().Length);
+            }
+
             if (memberParameters.Length > 0)
             {
                 builder.Append('(');

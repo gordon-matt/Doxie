@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Doxie.Core.Helpers;
 using Doxie.Core.Models;
+using Extenso;
 using Newtonsoft.Json;
 
 namespace Doxie.Core.Services
@@ -72,13 +73,15 @@ namespace Doxie.Core.Services
 
         public void GenerateJsonFile()
         {
-            string json = JsonConvert.SerializeObject(assemblies);
+            assemblies.ToJson().ToFile(assembliesJsonFilePath);
 
-            using (var fileStream = new FileStream(assembliesJsonFilePath, FileMode.Create, FileAccess.Write))
-            using (var streamWriter = new StreamWriter(fileStream))
-            {
-                streamWriter.Write(json);
-            }
+            //string json = JsonConvert.SerializeObject(assemblies);
+
+            //using (var fileStream = new FileStream(assembliesJsonFilePath, FileMode.Create, FileAccess.Write))
+            //using (var streamWriter = new StreamWriter(fileStream))
+            //{
+            //    streamWriter.Write(json);
+            //}
         }
     }
 }
