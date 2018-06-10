@@ -33,6 +33,7 @@
             this.dlgFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.txtPath = new System.Windows.Forms.TextBox();
             this.lblPath = new System.Windows.Forms.Label();
+            this.clbFiles = new System.Windows.Forms.CheckedListBox();
             this.SuspendLayout();
             // 
             // btnBrowse
@@ -48,7 +49,7 @@
             // btnGenerate
             // 
             this.btnGenerate.Enabled = false;
-            this.btnGenerate.Location = new System.Drawing.Point(548, 23);
+            this.btnGenerate.Location = new System.Drawing.Point(467, 526);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(75, 23);
             this.btnGenerate.TabIndex = 2;
@@ -73,11 +74,21 @@
             this.lblPath.Text = "Select a folder with .NET assemblies. Ensure the XML documentation files are pres" +
     "ent as well.";
             // 
+            // clbFiles
+            // 
+            this.clbFiles.CheckOnClick = true;
+            this.clbFiles.FormattingEnabled = true;
+            this.clbFiles.Location = new System.Drawing.Point(12, 51);
+            this.clbFiles.Name = "clbFiles";
+            this.clbFiles.Size = new System.Drawing.Size(530, 469);
+            this.clbFiles.TabIndex = 5;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(628, 63);
+            this.ClientSize = new System.Drawing.Size(553, 556);
+            this.Controls.Add(this.clbFiles);
             this.Controls.Add(this.lblPath);
             this.Controls.Add(this.txtPath);
             this.Controls.Add(this.btnGenerate);
@@ -97,6 +108,7 @@
         private System.Windows.Forms.FolderBrowserDialog dlgFolderBrowser;
         private System.Windows.Forms.TextBox txtPath;
         private System.Windows.Forms.Label lblPath;
+        private System.Windows.Forms.CheckedListBox clbFiles;
     }
 }
 

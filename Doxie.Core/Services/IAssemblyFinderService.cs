@@ -1,83 +1,83 @@
-﻿// ----------------------------------------------------------------------------
-// Based on AutoHelp's implementation
-// Original Code: https://github.com/RaynaldM/autohelp
-// ----------------------------------------------------------------------------
+﻿//// ----------------------------------------------------------------------------
+//// Based on AutoHelp's implementation
+//// Original Code: https://github.com/RaynaldM/autohelp
+//// ----------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Doxie.Core.Models;
-using Doxie.Core.XmlComments;
-using Extenso;
+//using System;
+//using System.Collections.Generic;
+//using System.IO;
+//using System.Linq;
+//using Doxie.Core.Models;
+//using Doxie.Core.XmlComments;
+//using Extenso;
 
-namespace Doxie.Core.Services
-{
-    public interface IAssemblyFinderService
-    {
-        IEnumerable<AssemblyModel> GetAssemblies();
+//namespace Doxie.Core.Services
+//{
+//    public interface IAssemblyFinderService
+//    {
+//        IEnumerable<AssemblyModel> GetAssemblies();
 
-        AssemblyModel GetAssembly(Guid id);
+//        AssemblyModel GetAssembly(Guid id);
 
-        void GenerateJsonFile();
-    }
+//        void GenerateJsonFile();
+//    }
 
-    public class AssemblyFinderService : IAssemblyFinderService
-    {
-        private IEnumerable<AssemblyModel> assemblies;
-        private string assembliesDirectoryPath;
-        private string assembliesJsonFilePath;
+//    public class AssemblyFinderService : IAssemblyFinderService
+//    {
+//        private IEnumerable<AssemblyModel> assemblies;
+//        private string assembliesDirectoryPath;
+//        private string assembliesJsonFilePath;
 
-        public AssemblyFinderService(string assembliesPath)
-        {
-            assembliesDirectoryPath = assembliesPath;
-            assembliesJsonFilePath = Path.Combine(assembliesDirectoryPath, "assemblies.json");
-            assemblies = InitAssemblies();
-        }
+//        public AssemblyFinderService(string assembliesPath)
+//        {
+//            assembliesDirectoryPath = assembliesPath;
+//            assembliesJsonFilePath = Path.Combine(assembliesDirectoryPath, "assemblies.json");
+//            assemblies = InitAssemblies();
+//        }
 
-        public IEnumerable<AssemblyModel> GetAssemblies()
-        {
-            return assemblies.Select(assembly => new AssemblyModel
-            {
-                Id = assembly.Id,
-                Name = assembly.Name,
-                FullName = assembly.FullName,
-                Namespaces = null
-            }).ToArray();
-        }
+//        public IEnumerable<AssemblyModel> GetAssemblies()
+//        {
+//            return assemblies.Select(assembly => new AssemblyModel
+//            {
+//                Id = assembly.Id,
+//                Name = assembly.Name,
+//                FullName = assembly.FullName,
+//                Namespaces = null
+//            }).ToArray();
+//        }
 
-        public AssemblyModel GetAssembly(Guid id)
-        {
-            return assemblies.SingleOrDefault(p => p.Id == id);
-        }
+//        public AssemblyModel GetAssembly(Guid id)
+//        {
+//            return assemblies.SingleOrDefault(p => p.Id == id);
+//        }
 
-        private IEnumerable<AssemblyModel> InitAssemblies()
-        {
-            return GetAssemblyFiles().Select(filePath => GetAssembly(filePath)).ToArray();
-        }
+//        private IEnumerable<AssemblyModel> InitAssemblies()
+//        {
+//            return GetAssemblyFiles().Select(filePath => GetAssembly(filePath)).ToArray();
+//        }
 
-        private IEnumerable<string> GetAssemblyFiles()
-        {
-            var assemblyFilePaths = new List<string>();
-            if (!string.IsNullOrEmpty(assembliesDirectoryPath) && Directory.Exists(assembliesDirectoryPath))
-            {
-                var dllFilePaths = Directory.EnumerateFiles(assembliesDirectoryPath, "*.dll");
-                assemblyFilePaths.AddRange(dllFilePaths.Where(file => File.Exists(file.Replace(".dll", ".xml"))));
-            }
+//        private IEnumerable<string> GetAssemblyFiles()
+//        {
+//            var assemblyFilePaths = new List<string>();
+//            if (!string.IsNullOrEmpty(assembliesDirectoryPath) && Directory.Exists(assembliesDirectoryPath))
+//            {
+//                var dllFilePaths = Directory.EnumerateFiles(assembliesDirectoryPath, "*.dll");
+//                assemblyFilePaths.AddRange(dllFilePaths.Where(file => File.Exists(file.Replace(".dll", ".xml"))));
+//            }
 
-            return assemblyFilePaths;
-        }
+//            return assemblyFilePaths;
+//        }
 
-        private AssemblyModel GetAssembly(string filePath, bool parseNamespace = true)
-        {
-            var assembly = new DocParser().Parse(filePath, parseNamespace);
-            assembly.FileName = filePath;
-            return assembly;
-        }
+//        private AssemblyModel GetAssembly(string filePath, bool parseNamespace = true)
+//        {
+//            var assembly = new DocParser().Parse(filePath, parseNamespace);
+//            assembly.FileName = filePath;
+//            return assembly;
+//        }
 
-        public void GenerateJsonFile()
-        {
-            assemblies.ToJson().ToFile(assembliesJsonFilePath);
-        }
-    }
-}
+//        public void GenerateJsonFile()
+//        {
+//            assemblies.ToJson().ToFile(assembliesJsonFilePath);
+//        }
+//    }
+//}
