@@ -7,41 +7,43 @@
             <span>${selectedAssembly.FullName}</span>
         </small>
     </h1>
-    <div class="row" style="height:85%;min-height:85%;">
-        <div class="col-md-3 full-height">
+    <div class="row">
+        <div class="col-md-3 scroll-column">
             <h2 class="namespace-title text-muted">Namespaces</h2>
-            <div class="div-scroll">
-                <ul id="namespace-list" class="list-group">
-                    <li repeat.for="namespace of selectedAssembly.Namespaces" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-truncate" title="${namespace.Name}">${namespace.Name}</h6>
-                        </div>
-                        <p class="mb-1">
-                            <button type="button" if.bind="namespace.Classes.length > 0" click.delegate="showClasses(namespace.Name)" class="btn btn-sm btn-warning" title="# of classes">${namespace.Classes.length} Classes</button>
-                            <button type="button" if.bind="namespace.Structures.length > 0" click.delegate="showStructures(namespace.Name)" class="btn btn-sm btn-info" title="# of structures">${namespace.Structures.length} Structures</button>
-                            <button type="button" if.bind="namespace.Interfaces.length > 0" click.delegate="showInterfaces(namespace.Name)" class="btn btn-sm btn-primary" title="# of interfaces">${namespace.Interfaces.length} Interfaces</button>
-                            <button type="button" if.bind="namespace.Enumerations.length > 0" click.delegate="showEnumerations(namespace.Name)" class="btn btn-sm btn-default" title="# of enumerations">${namespace.Enumerations.length} Enums</button>
-                            <button type="button" if.bind="namespace.Delegates.length > 0" click.delegate="showDelegates(namespace.Name)" class="btn btn-sm btn-primary" title=" # of delegates">${namespace.Delegates.length} Delegates</button>
-                        </p>
-                    </li>
-                </ul>
-            </div>
+			<div id="namespaces">
+				<ul id="namespace-list" class="list-group list-group-flush scrolly">
+					<li repeat.for="namespace of selectedAssembly.Namespaces" class="list-group-item list-group-item-action flex-column align-items-start">
+						<div class="d-flex w-100 justify-content-between">
+							<h6 class="mb-1 text-truncate" title="${namespace.Name}">${namespace.Name}</h6>
+						</div>
+						<p class="mb-1">
+							<button type="button" if.bind="namespace.Classes.length > 0" click.delegate="showClasses(namespace.Name)" class="btn btn-sm btn-warning" title="# of classes">${namespace.Classes.length} Classes</button>
+							<button type="button" if.bind="namespace.Structures.length > 0" click.delegate="showStructures(namespace.Name)" class="btn btn-sm btn-info" title="# of structures">${namespace.Structures.length} Structures</button>
+							<button type="button" if.bind="namespace.Interfaces.length > 0" click.delegate="showInterfaces(namespace.Name)" class="btn btn-sm btn-primary" title="# of interfaces">${namespace.Interfaces.length} Interfaces</button>
+							<button type="button" if.bind="namespace.Enumerations.length > 0" click.delegate="showEnumerations(namespace.Name)" class="btn btn-sm btn-default" title="# of enumerations">${namespace.Enumerations.length} Enums</button>
+							<button type="button" if.bind="namespace.Delegates.length > 0" click.delegate="showDelegates(namespace.Name)" class="btn btn-sm btn-primary" title=" # of delegates">${namespace.Delegates.length} Delegates</button>
+						</p>
+					</li>
+				</ul>
+			</div>
         </div>
         <div class="col-md-9 border border-top-0 border-bottom-0 border-right-0">
             <h2 id="namespace-title" class="namespace-title">${selectedNamespace.Name}</h2>
             <div class="row">
-                <div class="col-md-3 full-height">
+                <div class="col-md-3 scroll-column">
                     <h3>${selectedTypesTitle}</h3>
-                    <div class="div-scroll">
-                        <div id="type-list">
-                            <a repeat.for="type of selectedTypes" href="javascript.void(0);" click.delegate="showType(type)" class="list-group-item">
-                                <h5 class="list-group-item-heading text-truncate" title="${type.Name}">${type.Name}</h5>
-                            </a>
-                        </div>
+                    <div id="types">
+                        <ul id="type-list" class="list-group list-group-flush scrolly">
+							<li repeat.for="type of selectedTypes" class="list-group-item list-group-item-action flex-column align-items-start">
+								<a href="javascript.void(0);" click.delegate="showType(type)">
+									<h5 class="list-group-item-heading text-truncate" title="${type.Name}">${type.Name}</h5>
+								</a>
+							</li>
+                        </ul>
                     </div>
                 </div>
-                <div if.bind="selectedType" id="type-details" class="col-md-9 row full-height">
-                    <div class="col-md-12" style="height:24%;min-height:24%;max-height:24%">
+                <div if.bind="selectedType" id="type-details" class="col-md-9 full-height">
+                    <div class="col-md-12">
                         <h3 title="${selectedType.FullName}">
                             ${selectedType.Name}
                             <small>
