@@ -1,4 +1,4 @@
-﻿namespace Doxie.HelpFileGenerator
+﻿namespace Doxie.HelpFileGenerator.GUI
 {
     partial class MainForm
     {

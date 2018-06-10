@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿// ----------------------------------------------------------------------------
+// Based on AutoHelp's implementation
+// Original Code: https://github.com/RaynaldM/autohelp
+// ----------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Doxie.Core.Models

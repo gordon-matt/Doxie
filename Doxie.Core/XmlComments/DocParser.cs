@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ----------------------------------------------------------------------------
+// Based on AutoHelp's implementation
+// Original Code: https://github.com/RaynaldM/autohelp
+// ----------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,19 +11,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
-using Doxie.Core.Helpers;
-using Doxie.Core.Helpers.XmlHelper;
 using Doxie.Core.Models;
-using Assembly = System.Reflection.Assembly;
-using Exception = System.Exception;
 
-namespace Doxie.Core.Helpers
+namespace Doxie.Core.XmlComments
 {
     public class DocParser
     {
         private XmlDocCommentReader xmlDocCommentReader;
 
-        public Models.AssemblyModel Parse(string assemblyFile, bool parseNamespace = true)
+        public AssemblyModel Parse(string assemblyFile, bool parseNamespace = true)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace Doxie.Core.Helpers
                     }
                 }
 
-                var assemblyModel = new Models.AssemblyModel
+                var assemblyModel = new AssemblyModel
                 {
                     Id = assembly.ManifestModule.ModuleVersionId,
                     Name = assembly.GetName().Name,
@@ -57,7 +58,7 @@ namespace Doxie.Core.Helpers
 
         private void FindTypes(Assembly assembly, ICollection<NamespaceModel> namespaces)
         {
-            var types = assembly.GetLoadableTypes()
+            var types = GetLoadableTypes(assembly)
                 .Where(p => p.IsPublic || p.IsNestedPublic || p.IsVisible)
                 .ToArray();
 
@@ -495,6 +496,23 @@ namespace Doxie.Core.Helpers
             }
 
             return result;
+        }
+
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            try
+            {
+                return assembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException x)
+            {
+                return x.Types.Where(t => t != null);
+            }
         }
     }
 }

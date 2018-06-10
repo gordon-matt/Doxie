@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿// ----------------------------------------------------------------------------
+// Based on AutoHelp's implementation
+// Original Code: https://github.com/RaynaldM/autohelp
+// ----------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Doxie.Core.Models
@@ -40,7 +45,7 @@ namespace Doxie.Core.Models
 
         [JsonIgnore]
         public NamespaceModel Namespace { get; set; }
-        
+
         [JsonProperty]
         public ObjectType ObjectType { get; set; }
 

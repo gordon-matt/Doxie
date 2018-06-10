@@ -1,11 +1,15 @@
-﻿using System;
+﻿// ----------------------------------------------------------------------------
+// Based on AutoHelp's implementation
+// Original Code: https://github.com/RaynaldM/autohelp
+// ----------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Doxie.Core.Helpers;
 using Doxie.Core.Models;
+using Doxie.Core.XmlComments;
 using Extenso;
-using Newtonsoft.Json;
 
 namespace Doxie.Core.Services
 {
@@ -74,14 +78,6 @@ namespace Doxie.Core.Services
         public void GenerateJsonFile()
         {
             assemblies.ToJson().ToFile(assembliesJsonFilePath);
-
-            //string json = JsonConvert.SerializeObject(assemblies);
-
-            //using (var fileStream = new FileStream(assembliesJsonFilePath, FileMode.Create, FileAccess.Write))
-            //using (var streamWriter = new StreamWriter(fileStream))
-            //{
-            //    streamWriter.Write(json);
-            //}
         }
     }
 }

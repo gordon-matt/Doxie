@@ -1,4 +1,9 @@
-﻿using System.Globalization;
+﻿// ----------------------------------------------------------------------------
+// Based on AutoHelp's implementation
+// Original Code: https://github.com/RaynaldM/autohelp
+// ----------------------------------------------------------------------------
+
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace Doxie.Core.Models

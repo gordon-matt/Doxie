@@ -1,4 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿// ----------------------------------------------------------------------------
+// Based on AutoHelp's implementation
+// Original Code: https://github.com/RaynaldM/autohelp
+// ----------------------------------------------------------------------------
+
+using Newtonsoft.Json;
 
 namespace Doxie.Core.Models
 {

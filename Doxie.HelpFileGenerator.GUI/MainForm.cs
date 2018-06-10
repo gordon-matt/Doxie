@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Doxie.Core.Services;
 
-namespace Doxie.HelpFileGenerator
+namespace Doxie.HelpFileGenerator.GUI
 {
     public partial class MainForm : Form
     {
