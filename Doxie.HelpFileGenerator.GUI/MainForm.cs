@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Doxie.Core.Services;
 using Extenso.Collections;
@@ -37,6 +38,8 @@ namespace Doxie.HelpFileGenerator.GUI
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
             var selectedFiles = clbFiles.CheckedItems.OfType<object>().Select(x => x.ToString());
 
             if (selectedFiles.IsNullOrEmpty())
@@ -54,6 +57,21 @@ namespace Doxie.HelpFileGenerator.GUI
             //clbFiles.Enabled = false;
             //txtPath.Text = null;
             //assembliesPath = null;
+
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var assemblyName = new AssemblyName(args.Name);
+            string path = Path.Combine(assembliesPath, assemblyName.Name + ".dll");
+
+            if (File.Exists(path))
+            {
+                return Assembly.LoadFile(path);
+            }
+
+            return null;
         }
     }
 }
