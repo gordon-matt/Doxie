@@ -39,6 +39,13 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 
 4. Now all you have to do is pass that directory path to one of the "Help File Generators" and tell it which of those assemblies should be documented.
 
+## Bundling
+
+The default setup can be a bit slow. You can improve this by enabling JSPM bundling. I have added the necessary configuration in **packages.json** and **gulpfile.js**. All you need to do is run `gulp bundle`.
+> **NOTE:** Gulp tends to complain about the `baseURL` in the **config.js** being set to `location.pathname`. You can temporarily (or permanently if you wish) change this to the hardcoded path you need. In many cases this can be simply `/` and for GitHub pages it tends to be `/[Your Project Name]/`. The Gulp task should run fine then.
+
+> Further Note: You can also swap out JSPM for webpack if you prefer. See Aurelia's documentation for how to do that. And lastly, I will at some point find time to review all the Aurelia packages and see if there are some that can be removed from **packages.json** to further improve performance. No promises on when.
+
 ## License
 
 This project is licensed under the [MIT license](LICENSE.txt).
