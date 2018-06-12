@@ -43,6 +43,12 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 
 This project is licensed under the [MIT license](LICENSE.txt).
 
+## Credits
+
+The code and XSD schema for reading the XML comments files comes from an old project named Jolt.NET. The original source code can be found here: https://jolt.codeplex.com and RedGate have created their own fork on GitHub here: https://github.com/red-gate/JoltNet-core, which had an important bug fix in it.
+
+As for the UI and the overall idea, I was inspired by [AutoHelp](https://github.com/RaynaldM/autohelp) but totally reworked it to use Aurelia and I also decided it's better to generate a JSON file to read from instead of relying on MVC controller actions to acquire the data. This way, it's easy to use in GitHub pages.
+
 ## Donate
 If you find this project helpful, consider buying me a cup of coffee.  :-)
 
