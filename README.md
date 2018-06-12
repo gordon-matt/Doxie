@@ -2,6 +2,10 @@
 
 # Doxie - Help Generator for .NET Assemblies
 
+Built with:
+
+<img src="https://github.com/gordon-matt/Doxie/blob/master/_Misc/logos/Aurelia.png" alt="Built with Aurelia" width="250" />
+
 ![Index Page](https://github.com/gordon-matt/Doxie/blob/master/_Misc/Index.png)
 
 ![Assembly Page](https://github.com/gordon-matt/Doxie/blob/master/_Misc/Assembly.png)
@@ -21,9 +25,9 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 6. Grab the generated **assemblies.json** and place it in **Doxie/js**
 7. Run Doxie from a web server (example: IIS)
 8. Before deploying, modify the site as you like. Some suggestions:
-8.1 Change the footer text
-8.2 Change the URL in the GitHub Ribbon
-8.3 Use a different Bootstrap theme (see: https://cdnjs.com/libraries/bootswatch)
+   1. Change the footer text
+   2. Change the URL in the GitHub Ribbon
+   3. Use a different Bootstrap theme (see: https://cdnjs.com/libraries/bootswatch)
 
 > **NOTE** Regarding step 5: For .NET Core assemblies you need to ensure that all related assemblies are present in the same location as the ones you want to generate pages from. Otherwise the resulting documentation will contain error messages caused by **FileNotFoundException**s. It can be a pain to figure out what assemblies you need to copy, so there's a simple trick you can use to make this very easy:
 
@@ -38,6 +42,12 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 ## License
 
 This project is licensed under the [MIT license](LICENSE.txt).
+
+## Credits
+
+The code and XSD schema for reading the XML comments files comes from an old project named Jolt.NET. The original source code can be found here: https://jolt.codeplex.com and RedGate have created their own fork on GitHub here: https://github.com/red-gate/JoltNet-core, which had an important bug fix in it.
+
+As for the UI and the overall idea, I was inspired by [AutoHelp](https://github.com/RaynaldM/autohelp) but totally reworked it to use Aurelia and I also decided it's better to generate a JSON file to read from instead of relying on MVC controller actions to acquire the data. This way, it's easy to use in GitHub pages.
 
 ## Donate
 If you find this project helpful, consider buying me a cup of coffee.  :-)
