@@ -2,6 +2,10 @@
 
 # Doxie - Help Generator for .NET Assemblies
 
+Built with:
+
+<img src="https://github.com/gordon-matt/Doxie/blob/master/_Misc/logos/Aurelia.png" alt="Built with Aurelia" width="250" />
+
 ![Index Page](https://github.com/gordon-matt/Doxie/blob/master/_Misc/Index.png)
 
 ![Assembly Page](https://github.com/gordon-matt/Doxie/blob/master/_Misc/Assembly.png)
@@ -21,9 +25,9 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 6. Grab the generated **assemblies.json** and place it in **Doxie/js**
 7. Run Doxie from a web server (example: IIS)
 8. Before deploying, modify the site as you like. Some suggestions:
-8.1 Change the footer text
-8.2 Change the URL in the GitHub Ribbon
-8.3 Use a different Bootstrap theme (see: https://cdnjs.com/libraries/bootswatch)
+   1. Change the footer text
+   2. Change the URL in the GitHub Ribbon
+   3. Use a different Bootstrap theme (see: https://cdnjs.com/libraries/bootswatch)
 
 > **NOTE** Regarding step 5: For .NET Core assemblies you need to ensure that all related assemblies are present in the same location as the ones you want to generate pages from. Otherwise the resulting documentation will contain error messages caused by **FileNotFoundException**s. It can be a pain to figure out what assemblies you need to copy, so there's a simple trick you can use to make this very easy:
 
