@@ -64,5 +64,6 @@
     showType(type) {
         this.selectedType = type;
         window.setTimeout(() => $('.nav-tabs a:first').tab('show'), 200);
+        window.setTimeout(() => PR.prettyPrint(), 200);
     }
 }
