@@ -284,8 +284,7 @@ namespace Doxie.Core.XmlComments
         /// Substitutes the corresponding type from the given generic argument arrays when a
         /// parameter type is deemed to be a generic type/method argument.
         /// </remarks>
-        internal static Type[] ToParameterTypes(ParameterInfo[] parameters, Type[] genericTypeArguments,
-            Type[] genericMethodArguments)
+        internal static Type[] ToParameterTypes(ParameterInfo[] parameters, Type[] genericTypeArguments, Type[] genericMethodArguments)
         {
             return Array.ConvertAll(parameters,
                 methodParam =>
@@ -310,8 +309,7 @@ namespace Doxie.Core.XmlComments
         /// <param name="genericMethodArguments">
         /// The generic arguments from the parameter's method.
         /// </param>
-        internal static Type ToMethodSignatureType(Type parameterType, Type[] genericTypeArguments,
-            Type[] genericMethodArguments)
+        internal static Type ToMethodSignatureType(Type parameterType, Type[] genericTypeArguments, Type[] genericMethodArguments)
         {
             if (parameterType.IsGenericParameter)
             {
@@ -386,8 +384,7 @@ namespace Doxie.Core.XmlComments
         /// <returns>
         /// A string containing the requested member reference.
         /// </returns>
-        private static StringBuilder ToXmlDocCommentMember<TMember>(TMember member, ParameterInfo[] memberParameters,
-            out int namePosition)
+        private static StringBuilder ToXmlDocCommentMember<TMember>(TMember member, ParameterInfo[] memberParameters, out int namePosition)
             where TMember : MemberInfo
         {
             var builder = new StringBuilder();

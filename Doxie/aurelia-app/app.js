@@ -4,7 +4,7 @@ import { PLATFORM } from 'aurelia-pal';
 
 export class App {
     async configureRouter(config, router) {
-        config.title = 'Doxie Help Generator';
+        config.title = 'My Project';
 		config.map([
 			{ moduleId: PLATFORM.moduleName('aurelia-app/index'), route: ['', 'index'], name: 'index', nav: true, title: 'Home' },
 			{ moduleId: PLATFORM.moduleName('aurelia-app/assembly'), route: 'assembly/:id', name: 'assembly', title: 'Assembly' }

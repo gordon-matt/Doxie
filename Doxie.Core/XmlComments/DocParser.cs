@@ -19,7 +19,7 @@ namespace Doxie.Core.XmlComments
     {
         private XmlDocCommentReader xmlDocCommentReader;
 
-        public AssemblyModel Parse(string assemblyFile, bool parseNamespace = true)
+        public AssemblyModel Parse(string assemblyFile, bool parseXmlCommentsFile = true)
         {
             try
             {
@@ -27,16 +27,21 @@ namespace Doxie.Core.XmlComments
                 byte[] bytes = File.ReadAllBytes(assemblyFile);
                 var assembly = Assembly.Load(bytes);
 
-                if (parseNamespace)
+                if (parseXmlCommentsFile)
                 {
-                    xmlDocCommentReader = new XmlDocCommentReader(assemblyFile.Replace(".dll", ".xml"));
-                    FindTypes(assembly, namespaces);
+                    var xmlFile = assemblyFile.Replace(".dll", ".xml");
 
-                    namespaces = namespaces.OrderBy(o => o.Name).ToList();
-
-                    foreach (var @namespace in namespaces)
+                    if (File.Exists(xmlFile))
                     {
-                        @namespace.Classes = @namespace.Classes.OrderBy(c => c.Name).ToList();
+                        xmlDocCommentReader = new XmlDocCommentReader(xmlFile);
+                        FindTypes(assembly, namespaces);
+
+                        namespaces = namespaces.OrderBy(o => o.Name).ToList();
+
+                        foreach (var @namespace in namespaces)
+                        {
+                            @namespace.Classes = @namespace.Classes.OrderBy(c => c.Name).ToList();
+                        }
                     }
                 }
 
@@ -59,7 +64,7 @@ namespace Doxie.Core.XmlComments
         private void FindTypes(Assembly assembly, ICollection<NamespaceModel> namespaces)
         {
             var types = GetLoadableTypes(assembly)
-                .Where(p => p.IsPublic || p.IsNestedPublic || p.IsVisible)
+                .Where(x => x.IsPublic || x.IsNestedPublic || x.IsVisible)
                 .ToArray();
 
             foreach (var type in types)

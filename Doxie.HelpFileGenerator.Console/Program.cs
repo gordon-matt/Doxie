@@ -29,6 +29,8 @@ namespace Doxie.HelpFileGenerator
             {
                 Path.Combine(assembliesPath, "Extenso.AspNetCore.Mvc.dll"),
                 Path.Combine(assembliesPath, "Extenso.AspNetCore.Mvc.ExtensoUI.dll"),
+                Path.Combine(assembliesPath, "Extenso.AspNetCore.Mvc.ExtensoUI.Foundation.dll"),
+                Path.Combine(assembliesPath, "Extenso.AspNetCore.Mvc.ExtensoUI.JQueryUI.dll"),
                 Path.Combine(assembliesPath, "Extenso.AspNetCore.Mvc.ExtensoUI.KendoUI.dll"),
                 Path.Combine(assembliesPath, "Extenso.AspNetCore.OData.dll"),
                 Path.Combine(assembliesPath, "Extenso.Core.dll"),
