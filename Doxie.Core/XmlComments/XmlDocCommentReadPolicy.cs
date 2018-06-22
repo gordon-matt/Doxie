@@ -60,7 +60,7 @@ namespace Doxie.Core.XmlComments
         /// <summary>
         /// <see cref="IXmlDocCommentReadPolicy.ReadMember"/>
         /// </summary>
-        XElement IXmlDocCommentReadPolicy.ReadMember(string memberName)
+        public XElement ReadMember(string memberName)
         {
             XElement member = xDocument.Element(XmlDocCommentNames.DocElement)
                 ?.Element(XmlDocCommentNames.MembersElement)

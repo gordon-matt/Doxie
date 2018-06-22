@@ -23,9 +23,9 @@ namespace Doxie.Core.Services
             return selectedAssemblyPaths.Select(filePath => GetAssembly(filePath)).ToArray();
         }
 
-        private static AssemblyModel GetAssembly(string filePath, bool parseNamespace = true)
+        private static AssemblyModel GetAssembly(string filePath)
         {
-            var assembly = docParser.Parse(filePath, parseNamespace);
+            var assembly = docParser.Parse(filePath);
             assembly.FileName = filePath;
             return assembly;
         }

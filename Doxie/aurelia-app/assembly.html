@@ -70,13 +70,13 @@
                         <div role="tabpanel">
                             <ul id="type-tabs" class="nav nav-tabs" role="tablist">
                                 <li if.bind="selectedType.Constructors.length > 0" class="nav-item" role="presentation">
-                                    <a class="nav-link" href="#Constructors" aria-controls="Constructors" role="tab" data-toggle="tab">Constructors</a>
+                                    <a class="nav-link" href="#Constructors" aria-controls="Constructors" role="tab" data-toggle="tab"><img src="img/method.gif" border="0" alt="method" /> Constructors</a>
                                 </li>
                                 <li if.bind="selectedType.Methods.length > 0" class="nav-item" role="presentation">
-                                    <a class="nav-link" href="#Methods" aria-controls="Methods" role="tab" data-toggle="tab">Methods</a>
+                                    <a class="nav-link" href="#Methods" aria-controls="Methods" role="tab" data-toggle="tab"><img src="img/method.gif" border="0" alt="method" /> Methods</a>
                                 </li>
                                 <li if.bind="selectedType.Properties.length > 0" class="nav-item" role="presentation">
-                                    <a class="nav-link" href="#Properties" aria-controls="Properties" role="tab" data-toggle="tab">Properties</a>
+                                    <a class="nav-link" href="#Properties" aria-controls="Properties" role="tab" data-toggle="tab"><img src="img/property.gif" border="0" alt="property" /> Properties</a>
                                 </li>
                                 <li if.bind="selectedType.Members.length > 0" class="nav-item" role="presentation">
                                     <a class="nav-link" href="#Members" aria-controls="Members" role="tab" data-toggle="tab">Members</a>
@@ -89,7 +89,7 @@
                                             <div class="card-header" id="heading-${ctor.Id}">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-${ctor.Id}" aria-expanded="false" aria-controls="collapse-${ctor.Id}">
-                                                        ${ctor.Name}(${ctor.Parameters})
+                                                        <img src="img/method.gif" border="0" alt="method" /> ${ctor.Name}(${ctor.Parameters})
                                                     </button>
                                                 </h5>
                                             </div>
@@ -100,11 +100,12 @@
                                                     <hr />
                                                     <section if.bind="ctor.Parameters">
                                                         <h6 class="text-warning">Parameters</h6>
-                                                        <dl>
-                                                            <dt repeat.for="parameter of ctor.Parameters">
-                                                                ${parameter.Name} (${parameter.TypeFullName})
+                                                        <dl repeat.for="parameter of ctor.Parameters">
+                                                            <dt>
+                                                                ${parameter.Name}
                                                             </dt>
-                                                            <dd class="small text-muted">${parameter.Description}</dd>
+															<dd class="small text-muted indent-1"><strong>Type:</strong> ${parameter.TypeFullName}</dd>
+                                                            <dd class="small text-muted indent-1"><strong>Description:</strong> ${parameter.Description}</dd>
                                                         </dl>
                                                     </section>
                                                     <section if.bind="ctor.Remarks">
@@ -133,7 +134,7 @@
                                             <div class="card-header" id="heading-${method.Id}">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-${method.Id}" aria-expanded="false" aria-controls="collapse-${method.Id}">
-                                                        ${method.Name}(${method.FormattedParams})
+                                                        <img src="img/method.gif" border="0" alt="method" /> ${method.Name}(${method.FormattedParams})
                                                     </button>
                                                 </h5>
                                             </div>
@@ -144,11 +145,12 @@
                                                     <hr />
                                                     <section if.bind="method.Parameters">
                                                         <h6 class="text-warning">Parameters</h6>
-                                                        <dl>
-                                                            <dt repeat.for="parameter of method.Parameters">
-                                                                ${parameter.Name} (${parameter.TypeFullName})
+                                                        <dl repeat.for="parameter of method.Parameters">
+                                                            <dt>
+                                                                ${parameter.Name}
                                                             </dt>
-                                                            <dd class="small text-muted">${parameter.Description}</dd>
+															<dd class="small text-muted indent-1"><strong>Type:</strong> ${parameter.TypeFullName}</dd>
+                                                            <dd class="small text-muted indent-1"><strong>Description:</strong> ${parameter.Description}</dd>
                                                         </dl>
                                                     </section>
                                                     <section if.bind="method.Returns">
@@ -185,7 +187,7 @@
                                             <div class="card-header" id="heading-${property.Id}">
                                                 <h5 class="mb-0">
                                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-${property.Id}" aria-expanded="false" aria-controls="collapse-${property.Id}">
-                                                        ${property.Name}
+                                                        <img src="img/property.gif" border="0" alt="method" /> ${property.Name}
                                                     </button>
                                                 </h5>
                                             </div>
