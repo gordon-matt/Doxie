@@ -4,6 +4,8 @@
 // ----------------------------------------------------------------------------
 
 using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -254,16 +256,14 @@ namespace Doxie.Core.XmlComments
                 // #2 System.Linq.Expressions.Expression`1[[System.Func`2[[Roadkill.Core.User],[System.Object]]]]
                 // #3 System.Linq.Expressions.Expression<Func<User,object>>
 
-                // todo : trouver un contournement
-                //var csharpProvider = CodeDomProvider.CreateProvider("C#");
-
-                //var typeReference = new CodeTypeReference(paramType);
-                //var variableDeclaration = new CodeVariableDeclarationStatement(typeReference, "dummy");
+                var csharpProvider = CodeDomProvider.CreateProvider("C#");
+                var typeReference = new CodeTypeReference(paramType);
+                var variableDeclaration = new CodeVariableDeclarationStatement(typeReference, "dummy");
                 var stringBuilder = new StringBuilder();
-                //using (var writer = new StringWriter(stringBuilder))
-                //{
-                //    csharpProvider.GenerateCodeFromStatement(variableDeclaration, writer, new CodeGeneratorOptions());
-                //}
+                using (var writer = new StringWriter(stringBuilder))
+                {
+                    csharpProvider.GenerateCodeFromStatement(variableDeclaration, writer, new CodeGeneratorOptions());
+                }
 
                 stringBuilder.Replace(" dummy;", null);
                 result = stringBuilder.ToString();

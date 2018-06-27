@@ -13,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Extenso.Core" Version="1.0.0" />
+    <PackageReference Include="Extenso.Core" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.CodeDom" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
