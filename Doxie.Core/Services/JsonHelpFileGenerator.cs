@@ -15,7 +15,7 @@ namespace Doxie.Core.Services
         {
             var assemblies = GetAssemblies(selectedAssemblyPaths);
             string outputFileName = Path.Combine(outputPath, "assemblies.json");
-            assemblies.ToJson().ToFile(outputFileName);
+            assemblies.JsonSerialize().ToFile(outputFileName);
         }
 
         private static IEnumerable<AssemblyModel> GetAssemblies(IEnumerable<string> selectedAssemblyPaths)
