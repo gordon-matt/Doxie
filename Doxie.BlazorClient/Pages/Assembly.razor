@@ -1,73 +1,74 @@
 ﻿<h3>Assembly</h3>
 @page "/assembly/{id:guid}"
 @inject HttpClient Http
+@inject IJSRuntime JS
 
 <link rel="stylesheet" href="css/assembly-detail.css" />
 
-<h1>
-    <span>@selectedAssembly.Name</span>&nbsp;
-    <small class="text-muted">
-        <span>@selectedAssembly.FullName</span>
-    </small>
-</h1>
+<Heading Size="HeadingSize.Is1">
+    <Span>@selectedAssembly.Name</Span>&nbsp;
+    <Small Class="text-muted">
+        <Span>@selectedAssembly.FullName</Span>
+    </Small>
+</Heading>
 <Row>
     <Column ColumnSize="ColumnSize.Is3">
-        <h2 class="namespace-title text-muted">Namespaces</h2>
-        <div id="namespaces">
+        <Heading Size="HeadingSize.Is2" Class="namespace-title text-muted">Namespaces</Heading>
+        <Div ElementId="namespaces">
             <ListGroup Flush="true">
                 @foreach (var ns in selectedAssembly.Namespaces)
                 {
-                    <ListGroupItem class="list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-truncate" title="@ns.Name">@ns.Name</h6>
-                        </div>
-                        <p class="mb-1">
-                            <button type="button" hidden="@ns.Classes.IsNullOrEmpty()" @onclick="(() => ShowClasses(ns.Name))" class="btn btn-sm btn-warning" title="# of classes">@ns.Classes.Count Classes</button>
-                            <button type="button" hidden="@ns.Structures.IsNullOrEmpty()" @onclick="(() => ShowStructures(ns.Name))" class="btn btn-sm btn-info" title="# of structures">@ns.Structures.Count Structures</button>
-                            <button type="button" hidden="@ns.Interfaces.IsNullOrEmpty()" @onclick="(() => ShowInterfaces(ns.Name))" class="btn btn-sm btn-primary" title="# of interfaces">@ns.Interfaces.Count Interfaces</button>
-                            <button type="button" hidden="@ns.Enumerations.IsNullOrEmpty()" @onclick="(() => ShowEnumerations(ns.Name))" class="btn btn-sm btn-default" title="# of enumerations">@ns.Enumerations.Count Enums</button>
-                            <button type="button" hidden="@ns.Delegates.IsNullOrEmpty()" @onclick="(() => ShowDelegates(ns.Name))" class="btn btn-sm btn-primary" title=" # of delegates">@ns.Delegates.Count Delegates</button>
-                        </p>
+                    <ListGroupItem Class="list-group-item-action flex-column align-items-start">
+                        <Div Class="d-flex w-100 justify-content-between">
+                            <Heading Size="HeadingSize.Is6" Class="mb-1 text-truncate" title="@ns.Name">@ns.Name</Heading>
+                        </Div>
+                        <Paragraph Class="mb-1">
+                            <Button hidden="@ns.Classes.IsNullOrEmpty()" Clicked="(() => ShowClasses(ns.Name))" Color="Color.Warning" title="# of classes">@ns.Classes.Count Classes</Button>
+                            <Button hidden="@ns.Structures.IsNullOrEmpty()" Clicked="(() => ShowStructures(ns.Name))" Color="Color.Info" title="# of structures">@ns.Structures.Count Structures</Button>
+                            <Button hidden="@ns.Interfaces.IsNullOrEmpty()" Clicked="(() => ShowInterfaces(ns.Name))" Color="Color.Primary" title="# of interfaces">@ns.Interfaces.Count Interfaces</Button>
+                            <Button hidden="@ns.Enumerations.IsNullOrEmpty()" Clicked="(() => ShowEnumerations(ns.Name))" Color="Color.Secondary" title="# of enumerations">@ns.Enumerations.Count Enums</Button>
+                            <Button hidden="@ns.Delegates.IsNullOrEmpty()" Clicked="(() => ShowDelegates(ns.Name))" Color="Color.Primary" title=" # of delegates">@ns.Delegates.Count Delegates</Button>
+                        </Paragraph>
                     </ListGroupItem>
                 }
             </ListGroup>
-        </div>
+        </Div>
     </Column>
 
     @if (selectedNamespace != null)
     {
-        <Column ColumnSize="ColumnSize.Is9" class="border border-top-0 border-bottom-0 border-right-0">
-            <h2 id="namespace-title" class="namespace-title">@selectedNamespace.Name</h2>
-            <div class="row">
+        <Column ColumnSize="ColumnSize.Is9" Class="border border-top-0 border-bottom-0 border-right-0">
+            <Heading Size="HeadingSize.Is2" ElementId="namespace-title" Class="namespace-title">@selectedNamespace.Name</Heading>
+            <Row>
                 <Column ColumnSize="ColumnSize.Is3">
-                    <h3>@selectedTypesTitle</h3>
-                    <div id="types">
-                        <ListGroup Flush="true" id="type-list">
+                    <Heading Size="HeadingSize.Is3">@selectedTypesTitle</Heading>
+                    <Div ElementId="types">
+                        <ListGroup Flush="true" ElementId="type-list">
                             @foreach (var type in selectedTypes)
                             {
-                                <ListGroupItem class="list-group-item-action flex-column align-items-start">
-                                    <button type="button" @onclick="(() => ShowType(type))" class="btn btn-link">
-                                        <h5 class="list-group-item-heading text-truncate" title="@type.Name">@type.Name</h5>
-                                    </button>
+                                <ListGroupItem Class="list-group-item-action flex-column align-items-start">
+                                    <Button Clicked="(() => ShowType(type))" Color="Color.Link">
+                                        <Heading Size="HeadingSize.Is5" Class="list-group-item-heading text-truncate" title="@type.Name">@type.Name</Heading>
+                                    </Button>
                                 </ListGroupItem>
                             }
                         </ListGroup>
-                    </div>
+                    </Div>
                 </Column>
 
                 @if (selectedType != null)
                 {
-                    <Column ColumnSize="ColumnSize.Is9" id="type-details">
-                        <Column ColumnSize="ColumnSize.Is12" id="type-details-header">
-                            <h3 title="@selectedType.FullName">
+                    <Column ColumnSize="ColumnSize.Is9" ElementId="type-details">
+                        <Column ColumnSize="ColumnSize.Is12" ElementId="type-details-header">
+                            <Heading Size="HeadingSize.Is3" title="@selectedType.FullName">
                                 @selectedType.Name
-                                <small>
+                                <Small>
                                     <Badge Color="Color.Primary" hidden="@(!selectedType.IsPublic)">Public</Badge>
                                     <Badge Color="Color.Secondary" hidden="@selectedType.IsPublic">Private</Badge>
                                     <Badge Color="Color.Info" hidden="@(!selectedType.IsAbstract)">Abstract</Badge>
                                     <Badge Color="Color.Warning" hidden="@(!selectedType.IsSealed)">Sealed</Badge>
-                                </small>
-                            </h3>
+                                </Small>
+                            </Heading>
                             <Breadcrumb>
                                 <BreadcrumbItem>Inherited</BreadcrumbItem>
                                 @foreach (var parent in selectedType.Parents)
@@ -75,25 +76,25 @@
                                     <BreadcrumbItem>@parent.Name</BreadcrumbItem>
                                 }
                             </Breadcrumb>
-                            <p>@selectedType.Summary</p>
-                            <p class="text-muted hidden">@selectedType.Remarks</p>
-                            <p class="text-muted hidden">@selectedType.Example</p>
+                            <Paragraph>@selectedType.Summary</Paragraph>
+                            <Paragraph Class="text-muted hidden">@selectedType.Remarks</Paragraph>
+                            <Paragraph Class="text-muted hidden">@selectedType.Example</Paragraph>
                         </Column>
 
-                        <Column ColumnSize="ColumnSize.Is12" id="type-details-body">
+                        <Column ColumnSize="ColumnSize.Is12" ElementId="type-details-body">
                             <Tabs>
                                 <Items>
-                                    <Tab Name="Constructors" hidden="@selectedType.Constructors.IsNullOrEmpty()">
-                                        <img src="img/method.gif" border="0" alt="method" /> Constructors
+                                    <Tab ElementId="constructorsTab" Name="Constructors" hidden="@selectedType.Constructors.IsNullOrEmpty()">
+                                        <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Constructors
                                     </Tab>
-                                    <Tab Name="Methods" hidden="@selectedType.Methods.IsNullOrEmpty()">
-                                        <img src="img/method.gif" border="0" alt="method" /> Methods
+                                    <Tab ElementId="methodsTab" Name="Methods" hidden="@selectedType.Methods.IsNullOrEmpty()">
+                                        <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Methods
                                     </Tab>
-                                    <Tab Name="Properties" hidden="@selectedType.Properties.IsNullOrEmpty()">
-                                        <img src="img/property.gif" border="0" alt="property" /> Properties
+                                    <Tab ElementId="propertiesTab" Name="Properties" hidden="@selectedType.Properties.IsNullOrEmpty()">
+                                        <Image Source="img/property.gif" Border="Border.Is0" Text="property" /> Properties
                                     </Tab>
-                                    <Tab Name="Members" hidden="@selectedType.Members.IsNullOrEmpty()">
-                                        <img src="img/enumeration.gif" border="0" alt="members" /> Members
+                                    <Tab ElementId="membersTab" Name="Members" hidden="@selectedType.Members.IsNullOrEmpty()">
+                                        <Image Source="img/enumeration.gif" Border="Border.Is0" Text="members" /> Members
                                     </Tab>
                                 </Items>
                                 <Content>
@@ -104,19 +105,19 @@
                                                 string elementId = $"collapse-{Guid.NewGuid()}";
                                                 <Collapse>
                                                     <CollapseHeader>
-                                                        <Heading Size="HeadingSize.Is5" class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@ctor.Id">
-                                                                <img src="img/method.gif" border="0" alt="method" /> @(ctor.Name)(@ctor.FormattedParams))
+                                                        <Heading Size="HeadingSize.Is5" Class="mb-0">
+                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@ctor.Id">
+                                                                <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> @(ctor.Name)(@ctor.FormattedParams))
                                                             </button>
                                                         </Heading>
                                                     </CollapseHeader>
-                                                    <div id="@elementId" class="collapse">
+                                                    <Div ElementId="@elementId" Class="collapse">
                                                         <CardBody>
                                                             <CardTitle Size="5">@ctor.FullName</CardTitle>
                                                             <CardText>@ctor.Summary</CardText>
                                                             <hr />
                                                             <section hidden="@ctor.Parameters.IsNullOrEmpty()">
-                                                                <h6 class="text-warning">Parameters</h6>
+                                                                <Heading Size="HeadingSize.Is6" Class="text-warning">Parameters</Heading>
                                                                 @foreach (var parameter in ctor.Parameters)
                                                                 {
                                                                     <dl>
@@ -128,21 +129,21 @@
                                                             </section>
                                                             <section hidden="@ctor.Remarks.IsNullOrEmpty()">
                                                                 <hr />
-                                                                <h6>Remarks</h6>
-                                                                <p>@ctor.Remarks</p>
+                                                                <Heading Size="HeadingSize.Is6">Remarks</Heading>
+                                                                <Paragraph>@ctor.Remarks</Paragraph>
                                                             </section>
                                                             <section hidden="@ctor.Example.IsNullOrEmpty()">
                                                                 <hr />
-                                                                <h6>Example</h6>
-                                                                <p>@ctor.Example</p>
+                                                                <Heading Size="HeadingSize.Is6">Example</Heading>
+                                                                <Paragraph>@ctor.Example</Paragraph>
                                                             </section>
                                                             <section hidden="@ctor.Exceptions.IsNullOrEmpty()">
                                                                 <hr />
-                                                                <h6>Exceptions</h6>
-                                                                <p>@ctor.Exceptions</p>
+                                                                <Heading Size="HeadingSize.Is6">Exceptions</Heading>
+                                                                <Paragraph>@ctor.Exceptions</Paragraph>
                                                             </section>
                                                         </CardBody>
-                                                    </div>
+                                                    </Div>
                                                 </Collapse>
                                             }
                                         </Accordion>
@@ -154,19 +155,19 @@
                                                 string elementId = $"collapse-{Guid.NewGuid()}";
                                                 <Collapse>
                                                     <CollapseHeader>
-                                                        <Heading Size="HeadingSize.Is5" class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@method.Id">
-                                                                <img src="img/method.gif" border="0" alt="method" /> @(method.Name)(@method.FormattedParams)
+                                                        <Heading Size="HeadingSize.Is5" Class="mb-0">
+                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@method.Id">
+                                                                <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> @(method.Name)(@method.FormattedParams)
                                                             </button>
                                                         </Heading>
                                                     </CollapseHeader>
-                                                    <div id="@elementId" class="collapse">
+                                                    <Div ElementId="@elementId" Class="collapse">
                                                         <CardBody>
                                                             <CardTitle Size="5">@method.FullName</CardTitle>
                                                             <CardText>@method.Summary</CardText>
                                                             <hr />
                                                             <section hidden="@method.Parameters.IsNullOrEmpty()">
-                                                                <h6 class="text-warning">Parameters</h6>
+                                                                <Heading Size="HeadingSize.Is6" Class="text-warning">Parameters</Heading>
                                                                 @foreach (var parameter in method.Parameters)
                                                                 {
                                                                     <dl>
@@ -178,7 +179,7 @@
                                                             </section>
                                                             <section hidden="@string.IsNullOrEmpty(method.Returns)">
                                                                 <hr />
-                                                                <h6 class="text-primary">Returns</h6>
+                                                                <Heading Size="HeadingSize.Is6" Class="text-primary">Returns</Heading>
                                                                 <dl>
                                                                     <dt>@method.ReturnTypeFullName</dt>
                                                                     <dd class="small text-muted">@method.Returns</dd>
@@ -186,21 +187,21 @@
                                                             </section>
                                                             <section hidden="@string.IsNullOrEmpty(method.Remarks)">
                                                                 <hr />
-                                                                <h6>Remarks</h6>
-                                                                <p>@method.Remarks</p>
+                                                                <Heading Size="HeadingSize.Is6">Remarks</Heading>
+                                                                <Paragraph>@method.Remarks</Paragraph>
                                                             </section>
                                                             <section hidden="@string.IsNullOrEmpty(method.Example)">
                                                                 <hr />
-                                                                <h6>Example</h6>
+                                                                <Heading Size="HeadingSize.Is6">Example</Heading>
                                                                 <pre class="prettyprint lang-cs" lang="cs"><code>@method.Example</code></pre>
                                                             </section>
                                                             <section hidden="@string.IsNullOrEmpty(method.Exceptions)">
                                                                 <hr />
-                                                                <h6>Exceptions</h6>
-                                                                <p>@method.Exceptions</p>
+                                                                <Heading Size="HeadingSize.Is6">Exceptions</Heading>
+                                                                <Paragraph>@method.Exceptions</Paragraph>
                                                             </section>
                                                         </CardBody>
-                                                    </div>
+                                                    </Div>
                                                 </Collapse>
                                             }
                                         </Accordion>
@@ -212,29 +213,29 @@
                                                 string elementId = $"collapse-{Guid.NewGuid()}";
                                                 <Collapse>
                                                     <CollapseHeader>
-                                                        <Heading Size="HeadingSize.Is5" class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@property.Id">
-                                                                <img src="img/property.gif" border="0" alt="method" /> @property.Name
+                                                        <Heading Size="HeadingSize.Is5" Class="mb-0">
+                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@property.Id">
+                                                                <Image Source="img/property.gif" Border="Border.Is0" Text="method" /> @property.Name
                                                             </button>
                                                         </Heading>
                                                     </CollapseHeader>
-                                                    <div id="@elementId" class="collapse">
+                                                    <Div ElementId="@elementId" Class="collapse">
                                                         <CardBody>
                                                             <CardTitle Size="5">@property.FullName</CardTitle>
                                                             <CardText>@property.Summary</CardText>
                                                             <hr />
                                                             <section hidden="@string.IsNullOrEmpty(property.Remarks)">
                                                                 <hr />
-                                                                <h6>Remarks</h6>
-                                                                <p>@property.Remarks</p>
+                                                                <Heading Size="HeadingSize.Is6">Remarks</Heading>
+                                                                <Paragraph>@property.Remarks</Paragraph>
                                                             </section>
                                                             <section hidden="@string.IsNullOrEmpty(property.Example)">
                                                                 <hr />
-                                                                <h6>Example</h6>
-                                                                <p>@property.Example</p>
+                                                                <Heading Size="HeadingSize.Is6">Example</Heading>
+                                                                <Paragraph>@property.Example</Paragraph>
                                                             </section>
                                                         </CardBody>
-                                                    </div>
+                                                    </Div>
                                                 </Collapse>
                                             }
                                         </Accordion>
@@ -244,10 +245,12 @@
                                             @foreach (var member in selectedType.Members)
                                             {
                                                 <ListGroupItem>
-                                                    <h6 class="list-group-item-heading"><img src="img/enumeration.gif" border="0" alt="members" /> @member.Name</h6>
-                                                    <div class="list-group-item-text">
-                                                        <small>@member.Description</small>
-                                                    </div>
+                                                    <Heading Size="HeadingSize.Is6" Class="list-group-item-heading">
+                                                        <Image Source="img/enumeration.gif" Border="Border.Is0" Text="members" /> @member.Name
+                                                    </Heading>
+                                                    <Div Class="list-group-item-text">
+                                                        <Small>@member.Description</Small>
+                                                    </Div>
                                                 </ListGroupItem>
                                             }
                                         </ListGroup>
@@ -257,7 +260,7 @@
                         </Column>
                     </Column>
                 }
-            </div>
+            </Row>
         </Column>
     }
 </Row>
@@ -324,10 +327,9 @@
         selectedNamespace = selectedAssembly.Namespaces.First(x => x.Name == namespaceName);
     }
 
-    private void ShowType(TypeModel type)
+    private async void ShowType(TypeModel type)
     {
         selectedType = type;
-        //window.setTimeout(() => $(".nav-tabs a:first").tab("show"), 200);
-        //window.setTimeout(() => PR.prettyPrint(), 200);
+        await JS.InvokeVoidAsync("refreshAssemblyTabs");
     }
 }

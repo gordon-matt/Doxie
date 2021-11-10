@@ -8,14 +8,15 @@
 <div class="card-deck">
     @foreach (var assembly in Context.Assemblies)
     {
-        <div id="@assembly.Id" class="card my-3">
+        string href = $"/assembly/{assembly.Id}";
+        <Card id="@assembly.Id" class="my-3">
             <a href='/assembly/@assembly.Id' style='position: absolute; top: 0; left: 0; height: 100%; width: 100%;'></a>
-            <div class="card-body">
-                <h4 class="card-title">@assembly.Name</h4>
-                <p class="card-text">@assembly.FullName</p>
-                <a class="card-link" href='/assembly/@assembly.Id' title="@assembly.Name">View</a>
-            </div>
-        </div>
+            <CardBody class="card-body">
+                <CardTitle Size="4">@assembly.Name</CardTitle>
+                <CardText>@assembly.FullName</CardText>
+                <CardLink Source="@href" Alt="@assembly.Name">View</CardLink>
+            </CardBody>
+        </Card>
     }
 </div>
 
