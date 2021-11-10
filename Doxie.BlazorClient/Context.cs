@@ -4,6 +4,6 @@ namespace Doxie.BlazorClient
 {
     public static class Context
     {
-        public static AssemblyModel[] Assemblies { get; set; }
+        public static ICollection<AssemblyModel> Assemblies { get; set; } = new List<AssemblyModel>();
     }
 }
