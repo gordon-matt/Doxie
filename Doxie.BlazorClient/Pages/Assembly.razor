@@ -84,21 +84,29 @@
                         <Column ColumnSize="ColumnSize.Is12" ElementId="type-details-body">
                             <Tabs>
                                 <Items>
-                                    <Tab ElementId="constructorsTab" Name="Constructors" hidden="@selectedType.Constructors.IsNullOrEmpty()">
-                                        <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Constructors
-                                    </Tab>
-                                    <Tab ElementId="methodsTab" Name="Methods" hidden="@selectedType.Methods.IsNullOrEmpty()">
-                                        <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Methods
-                                    </Tab>
-                                    <Tab ElementId="propertiesTab" Name="Properties" hidden="@selectedType.Properties.IsNullOrEmpty()">
-                                        <Image Source="img/property.gif" Border="Border.Is0" Text="property" /> Properties
-                                    </Tab>
-                                    <Tab ElementId="membersTab" Name="Members" hidden="@selectedType.Members.IsNullOrEmpty()">
-                                        <Image Source="img/enumeration.gif" Border="Border.Is0" Text="members" /> Members
-                                    </Tab>
+                                    <li class="nav-item" hidden="@selectedType.Constructors.IsNullOrEmpty()">
+                                        <a class="nav-link" href="#Constructors" aria-controls="Constructors" role="tab" data-toggle="tab">
+                                            <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Constructors
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" hidden="@selectedType.Methods.IsNullOrEmpty()">
+                                        <a class="nav-link" href="#Methods" aria-controls="Methods" role="tab" data-toggle="tab">
+                                            <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Methods
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" hidden="@selectedType.Properties.IsNullOrEmpty()">
+                                        <a class="nav-link" href="#Properties" aria-controls="Properties" role="tab" data-toggle="tab">
+                                            <Image Source="img/property.gif" Border="Border.Is0" Text="property" /> Properties
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" hidden="@selectedType.Members.IsNullOrEmpty()">
+                                        <a class="nav-link" href="#Members" aria-controls="Members" role="tab" data-toggle="tab">
+                                            <Image Source="img/enumeration.gif" Border="Border.Is0" Text="members" /> Members
+                                        </a>
+                                    </li>
                                 </Items>
                                 <Content>
-                                    <TabPanel Name="Constructors" hidden="@selectedType.Constructors.IsNullOrEmpty()">
+                                    <TabPanel ElementId="Constructors" Name="Constructors" hidden="@selectedType.Constructors.IsNullOrEmpty()">
                                         <Accordion>
                                             @foreach (var ctor in selectedType.Constructors)
                                             {
@@ -148,7 +156,7 @@
                                             }
                                         </Accordion>
                                     </TabPanel>
-                                    <TabPanel Name="Methods" hidden="@selectedType.Methods.IsNullOrEmpty()">
+                                    <TabPanel ElementId="Methods" Name="Methods" hidden="@selectedType.Methods.IsNullOrEmpty()">
                                         <Accordion>
                                             @foreach (var method in selectedType.Methods)
                                             {
@@ -206,7 +214,7 @@
                                             }
                                         </Accordion>
                                     </TabPanel>
-                                    <TabPanel Name="Properties" hidden="@selectedType.Properties.IsNullOrEmpty()">
+                                    <TabPanel ElementId="Properties" Name="Properties" hidden="@selectedType.Properties.IsNullOrEmpty()">
                                         <Accordion>
                                             @foreach (var property in selectedType.Properties)
                                             {
@@ -240,7 +248,7 @@
                                             }
                                         </Accordion>
                                     </TabPanel>
-                                    <TabPanel Name="Members" hidden="@selectedType.Members.IsNullOrEmpty()">
+                                    <TabPanel ElementId="Members" Name="Members" hidden="@selectedType.Members.IsNullOrEmpty()">
                                         <ListGroup>
                                             @foreach (var member in selectedType.Members)
                                             {
@@ -279,10 +287,10 @@
     {
         if (Context.Assemblies.IsNullOrEmpty())
         {
-            Context.Assemblies = await Http.GetFromJsonAsync<AssemblyModel[]>("js/assemblies.json");
+            Context.Assemblies = await Http.GetFromJsonAsync<AssemblyModel[]>("js/assemblies.json") ?? new AssemblyModel[0];
         }
 
-        selectedAssembly = Context.Assemblies.FirstOrDefault(x => x.Id == Id);
+        selectedAssembly = Context.Assemblies.First(x => x.Id == Id);
     }
 
     private void ShowClasses(string namespaceName)
@@ -330,6 +338,6 @@
     private async void ShowType(TypeModel type)
     {
         selectedType = type;
-        await JS.InvokeVoidAsync("refreshAssemblyTabs");
+        await JS.InvokeVoidAsync("onShowType");
     }
 }

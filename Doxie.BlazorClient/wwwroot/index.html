@@ -41,34 +41,8 @@
     <script src="_framework/blazor.webassembly.js"></script>
 
     <script type="text/javascript">
-        function refreshAssemblyTabs() {
-            console.log('Blah');
-
-            // .tab("show") NOT working, as expected
-
-            //$('#constructorsTab a:first').removeClass("active");
-            //$('#methodsTab a:first').removeClass("active");
-            //$('#propertiesTab a:first').removeClass("active");
-            //$('#membersTab a:first').removeClass("active");
-
-            if (!$('#constructorsTab').is(":hidden")) {
-                $('#constructorsTab a:first').tab("show");
-                //$('#constructorsTab a:first').addClass("show");
-            }
-            else if (!$('#methodsTab').is(":hidden")) {
-                $('#methodsTab a:first').tab("show");
-                //$('#methodsTab a:first').addClass("show");
-            }
-            else if (!$('#propertiesTab').is(":hidden")) {
-                $('#propertiesTab a:first').tab("show");
-                //$('#propertiesTab a:first').addClass("show");
-            }
-            else if (!$('#membersTab').is(":hidden")) {
-                $('#membersTab a:first').tab("show");
-                //$('#membersTab a:first').addClass("show");
-            }
-
-            //window.setTimeout(() => $(".nav-tabs a:first").tab("show"), 200);
+        function onShowType() {
+            window.setTimeout(() => $(".nav-tabs a:not(:hidden):first").tab("show"), 200);
             window.setTimeout(() => PR.prettyPrint(), 200);
         };
     </script>
