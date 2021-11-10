@@ -1,0 +1,30 @@
+﻿@page "/"
+@inject HttpClient Http
+
+<PageTitle>Index</PageTitle>
+
+<link href="css/index-cards.css" rel="stylesheet" />
+
+<div class="card-deck">
+    @foreach (var assembly in Context.Assemblies)
+    {
+        <div id="@assembly.Id" class="card my-3">
+            <a href='/assembly/@assembly.Id' style='position: absolute; top: 0; left: 0; height: 100%; width: 100%;'></a>
+            <div class="card-body">
+                <h4 class="card-title">@assembly.Name</h4>
+                <p class="card-text">@assembly.FullName</p>
+                <a class="card-link" href='/assembly/@assembly.Id' title="@assembly.Name">View</a>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (Context.Assemblies == null)
+        {
+            Context.Assemblies = await Http.GetFromJsonAsync<AssemblyModel[]>("js/assemblies.json");
+        }
+    }
+}
