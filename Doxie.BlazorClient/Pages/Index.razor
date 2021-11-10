@@ -22,7 +22,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        if (Context.Assemblies == null)
+        if (Context.Assemblies.IsNullOrEmpty())
         {
             Context.Assemblies = await Http.GetFromJsonAsync<AssemblyModel[]>("js/assemblies.json");
         }
