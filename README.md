@@ -1,3 +1,18 @@
+## UPDATE
+
+Doxie now has a Blazor version (Web Assembly). The demo mentioned below is now the new Blazor version instead of the Aurelia one. Instructions for the Blazor version as follows:
+
+1. Change **img/logo.png** to your own logo (keep same file name, else modify **NavMenu.razor**)
+2. Change the `href` for the **Fork me on GitHub** link in **MainLayout.razor**
+3. Change the `<title>` and `<base>` elements in **wwwroot/index.html**
+4. Make any other changes you wish (such as Bootstrap theme).
+5. Publish to folder
+6. Ignore the **web.config** and just add all files from **wwwroot** directly to your project's **gh-pages** branch
+7. Make sure you have the **.gitattributes** and **.nojekyll** files present
+8. Push to Git
+
+That's it.
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=gordon_matt%40live%2ecom&lc=AU&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 <img src="https://github.com/gordon-matt/Doxie/blob/master/_Misc/logos/Doxie.png" alt="Logo" width="250" />
