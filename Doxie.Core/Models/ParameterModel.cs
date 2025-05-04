@@ -5,34 +5,30 @@
 
 using Newtonsoft.Json;
 
-namespace Doxie.Core.Models
+namespace Doxie.Core.Models;
+
+public class ParameterModel
 {
-    public class ParameterModel
-    {
-        [JsonProperty]
-        public string Attributes { get; set; }
+    [JsonProperty]
+    public string Attributes { get; set; }
 
-        [JsonProperty]
-        public string Description { get; set; }
+    [JsonProperty]
+    public string Description { get; set; }
 
-        [JsonProperty]
-        public bool IsOut { get; set; }
+    [JsonProperty]
+    public bool IsOut { get; set; }
 
-        [JsonProperty]
-        public bool IsRetval { get; set; }
+    [JsonProperty]
+    public bool IsRetval { get; set; }
 
-        [JsonProperty]
-        public string Name { get; set; }
+    [JsonProperty]
+    public string Name { get; set; }
 
-        [JsonProperty]
-        public string Type { get; set; }
+    [JsonProperty]
+    public string Type { get; set; }
 
-        [JsonProperty]
-        public string TypeFullName { get; set; }
+    [JsonProperty]
+    public string TypeFullName { get; set; }
 
-        public override string ToString()
-        {
-            return $"{Type} {Name}";
-        }
-    }
+    public override string ToString() => $"{Type} {Name}";
 }

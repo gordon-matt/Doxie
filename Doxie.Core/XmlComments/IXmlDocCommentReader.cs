@@ -20,30 +20,28 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 */
 // ----------------------------------------------------------------------------
 
-using System;
 using System.Reflection;
 using System.Xml.Linq;
 
-namespace Doxie.Core.XmlComments
+namespace Doxie.Core.XmlComments;
+
+/// <summary>
+/// An internal interface supporting the testing of objects
+/// that have and/or use an <see cref="XmlDocCommentReader"/>.
+/// </summary>
+internal interface IXmlDocCommentReader
 {
-    /// <summary>
-    /// An internal interface supporting the testing of objects
-    /// that have and/or use an <see cref="XmlDocCommentReader"/>.
-    /// </summary>
-    internal interface IXmlDocCommentReader
-    {
-        XElement GetComments(ConstructorInfo constructorInfo);
+    XElement GetComments(ConstructorInfo constructorInfo);
 
-        XElement GetComments(EventInfo eventInfoInfo);
+    XElement GetComments(EventInfo eventInfoInfo);
 
-        XElement GetComments(FieldInfo fieldInfo);
+    XElement GetComments(FieldInfo fieldInfo);
 
-        XElement GetComments(MethodInfo methodInfo);
+    XElement GetComments(MethodInfo methodInfo);
 
-        XElement GetComments(MemberInfo memberInfo);
+    XElement GetComments(MemberInfo memberInfo);
 
-        XElement GetComments(PropertyInfo propertyInfo);
+    XElement GetComments(PropertyInfo propertyInfo);
 
-        XElement GetComments(Type type);
-    }
+    XElement GetComments(Type type);
 }

@@ -3,9 +3,8 @@
 // Original Code: https://github.com/RaynaldM/autohelp
 // ----------------------------------------------------------------------------
 
-namespace Doxie.Core.Models
+namespace Doxie.Core.Models;
+
+public class ExceptionModel
 {
-    public class ExceptionModel
-    {
-    }
 }

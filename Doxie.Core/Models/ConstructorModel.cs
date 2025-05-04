@@ -5,11 +5,10 @@
 
 using Newtonsoft.Json;
 
-namespace Doxie.Core.Models
+namespace Doxie.Core.Models;
+
+public class ConstructorModel : BaseCodeComment
 {
-    public class ConstructorModel : BaseCodeComment
-    {
-        [JsonProperty]
-        public string Attributes { get; set; }
-    }
+    [JsonProperty]
+    public string Attributes { get; set; }
 }

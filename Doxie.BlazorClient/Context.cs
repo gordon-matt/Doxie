@@ -1,9 +1,8 @@
 ﻿using Doxie.Core.Models;
 
-namespace Doxie.BlazorClient
+namespace Doxie.BlazorClient;
+
+public static class Context
 {
-    public static class Context
-    {
-        public static ICollection<AssemblyModel> Assemblies { get; set; } = new List<AssemblyModel>();
-    }
+    public static ICollection<AssemblyModel> Assemblies { get; set; } = [];
 }

@@ -10,10 +10,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services
-    .AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
+    .AddBlazorise(options => options.Immediate = true)
     .AddBootstrapProviders()
     .AddFontAwesomeIcons();
 

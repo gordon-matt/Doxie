@@ -3,22 +3,20 @@
 // Original Code: https://github.com/RaynaldM/autohelp
 // ----------------------------------------------------------------------------
 
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Doxie.Core.Models
+namespace Doxie.Core.Models;
+
+public class MethodModel : BaseCodeComment
 {
-    public class MethodModel : BaseCodeComment
+    public MethodModel()
     {
-        public MethodModel()
-        {
-            Parameters = new List<ParameterModel>();
-        }
-
-        [JsonProperty]
-        public string ReturnType { get; set; }
-
-        [JsonProperty]
-        public string ReturnTypeFullName { get; set; }
+        Parameters = [];
     }
+
+    [JsonProperty]
+    public string ReturnType { get; set; }
+
+    [JsonProperty]
+    public string ReturnTypeFullName { get; set; }
 }
