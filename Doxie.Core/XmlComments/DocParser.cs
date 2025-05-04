@@ -212,7 +212,7 @@ public class DocParser
 
                 try
                 {
-                    constructor.FullName = constructorInfo.ToString();
+                    constructor.FullName = ReflectionHelper.GetConstructorSignature(constructorInfo);
 
                     // Get common tags
                     var commentsElement = xmlDocCommentReader.GetComments(constructorInfo);
@@ -383,7 +383,7 @@ public class DocParser
 
                     try
                     {
-                        method.FullName = methodInfo.ToString();
+                        method.FullName = ReflectionHelper.GetMethodSignature(methodInfo);
                         method.ReturnType = GetTypeName(methodInfo.ReturnType);
                         method.ReturnTypeFullName = GetFullTypeName(methodInfo.ReturnType);
 
@@ -455,7 +455,7 @@ public class DocParser
 
                 try
                 {
-                    property.FullName = propertyInfo.ToString();
+                    property.FullName = ReflectionHelper.GetPropertySignature(propertyInfo);
                     property.Type = GetTypeName(propertyInfo.PropertyType);
                     property.TypeFullName = GetFullTypeName(propertyInfo.PropertyType);
 
