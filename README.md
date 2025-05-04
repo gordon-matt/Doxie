@@ -1,4 +1,8 @@
-## UPDATE
+## NOTICE
+
+The Aurelia version will no longer be maintained and will be removed in future.
+
+## BLAZOR VERSION
 
 Doxie now has a Blazor version (Web Assembly). The demo mentioned below is now the new Blazor version instead of the Aurelia one. Instructions for the Blazor version as follows:
 
