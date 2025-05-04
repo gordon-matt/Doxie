@@ -13,5 +13,6 @@
     <PackageReference Include="Extenso.Core" Version="9.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.CodeDom" Version="9.0.4" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.4" />
   </ItemGroup>
 </Project>

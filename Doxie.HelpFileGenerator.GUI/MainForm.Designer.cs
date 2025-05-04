@@ -28,77 +28,82 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.btnGenerate = new System.Windows.Forms.Button();
-            this.dlgFolderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.txtPath = new System.Windows.Forms.TextBox();
-            this.lblPath = new System.Windows.Forms.Label();
-            this.clbFiles = new System.Windows.Forms.CheckedListBox();
-            this.SuspendLayout();
+            btnBrowse = new Button();
+            btnGenerate = new Button();
+            dlgFolderBrowser = new FolderBrowserDialog();
+            txtPath = new TextBox();
+            lblPath = new Label();
+            clbFiles = new CheckedListBox();
+            SuspendLayout();
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(467, 23);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowse.TabIndex = 0;
-            this.btnBrowse.Text = "Browse";
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+            btnBrowse.Location = new Point(545, 27);
+            btnBrowse.Margin = new Padding(4, 3, 4, 3);
+            btnBrowse.Name = "btnBrowse";
+            btnBrowse.Size = new Size(88, 27);
+            btnBrowse.TabIndex = 0;
+            btnBrowse.Text = "Browse";
+            btnBrowse.UseVisualStyleBackColor = true;
+            btnBrowse.Click += btnBrowse_Click;
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Enabled = false;
-            this.btnGenerate.Location = new System.Drawing.Point(467, 526);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(75, 23);
-            this.btnGenerate.TabIndex = 2;
-            this.btnGenerate.Text = "Generate";
-            this.btnGenerate.UseVisualStyleBackColor = true;
-            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            btnGenerate.Enabled = false;
+            btnGenerate.Location = new Point(545, 607);
+            btnGenerate.Margin = new Padding(4, 3, 4, 3);
+            btnGenerate.Name = "btnGenerate";
+            btnGenerate.Size = new Size(88, 27);
+            btnGenerate.TabIndex = 2;
+            btnGenerate.Text = "Generate";
+            btnGenerate.UseVisualStyleBackColor = true;
+            btnGenerate.Click += btnGenerate_Click;
             // 
             // txtPath
             // 
-            this.txtPath.Location = new System.Drawing.Point(12, 25);
-            this.txtPath.Name = "txtPath";
-            this.txtPath.Size = new System.Drawing.Size(449, 20);
-            this.txtPath.TabIndex = 3;
+            txtPath.Location = new Point(14, 29);
+            txtPath.Margin = new Padding(4, 3, 4, 3);
+            txtPath.Name = "txtPath";
+            txtPath.Size = new Size(523, 23);
+            txtPath.TabIndex = 3;
             // 
             // lblPath
             // 
-            this.lblPath.AutoSize = true;
-            this.lblPath.Location = new System.Drawing.Point(12, 9);
-            this.lblPath.Name = "lblPath";
-            this.lblPath.Size = new System.Drawing.Size(449, 13);
-            this.lblPath.TabIndex = 4;
-            this.lblPath.Text = "Select a folder with .NET assemblies. Ensure the XML documentation files are pres" +
-    "ent as well.";
+            lblPath.AutoSize = true;
+            lblPath.Location = new Point(14, 10);
+            lblPath.Margin = new Padding(4, 0, 4, 0);
+            lblPath.Name = "lblPath";
+            lblPath.Size = new Size(493, 15);
+            lblPath.TabIndex = 4;
+            lblPath.Text = "Select a folder with .NET assemblies. Ensure the XML documentation files are present as well.";
             // 
             // clbFiles
             // 
-            this.clbFiles.CheckOnClick = true;
-            this.clbFiles.FormattingEnabled = true;
-            this.clbFiles.Location = new System.Drawing.Point(12, 51);
-            this.clbFiles.Name = "clbFiles";
-            this.clbFiles.Size = new System.Drawing.Size(530, 469);
-            this.clbFiles.TabIndex = 5;
+            clbFiles.CheckOnClick = true;
+            clbFiles.FormattingEnabled = true;
+            clbFiles.Location = new Point(14, 59);
+            clbFiles.Margin = new Padding(4, 3, 4, 3);
+            clbFiles.Name = "clbFiles";
+            clbFiles.Size = new Size(618, 526);
+            clbFiles.TabIndex = 5;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 556);
-            this.Controls.Add(this.clbFiles);
-            this.Controls.Add(this.lblPath);
-            this.Controls.Add(this.txtPath);
-            this.Controls.Add(this.btnGenerate);
-            this.Controls.Add(this.btnBrowse);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Doxie Help File Generator";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(645, 642);
+            Controls.Add(clbFiles);
+            Controls.Add(lblPath);
+            Controls.Add(txtPath);
+            Controls.Add(btnGenerate);
+            Controls.Add(btnBrowse);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Doxie Help File Generator";
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
