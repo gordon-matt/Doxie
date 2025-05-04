@@ -23,7 +23,7 @@
                             <Heading Size="HeadingSize.Is6" Class="mb-1 text-truncate" title="@ns.Name">@ns.Name</Heading>
                         </Div>
                         <Paragraph Class="mb-1">
-                            <Button hidden="@ns.Classes.IsNullOrEmpty()" Clicked="(() => ShowClasses(ns.Name))" Color="Color.Warning" title="# of classes">@ns.Classes.Count Classes</Button>
+                            <Button hidden="@ns.Classes.IsNullOrEmpty()" Clicked="(() => ShowClasses(ns.Name))" Color="Color.Secondary" title="# of classes">@ns.Classes.Count Classes</Button>
                             <Button hidden="@ns.Structures.IsNullOrEmpty()" Clicked="(() => ShowStructures(ns.Name))" Color="Color.Info" title="# of structures">@ns.Structures.Count Structures</Button>
                             <Button hidden="@ns.Interfaces.IsNullOrEmpty()" Clicked="(() => ShowInterfaces(ns.Name))" Color="Color.Primary" title="# of interfaces">@ns.Interfaces.Count Interfaces</Button>
                             <Button hidden="@ns.Enumerations.IsNullOrEmpty()" Clicked="(() => ShowEnumerations(ns.Name))" Color="Color.Secondary" title="# of enumerations">@ns.Enumerations.Count Enums</Button>
