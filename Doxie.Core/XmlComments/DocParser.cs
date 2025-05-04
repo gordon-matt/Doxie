@@ -15,7 +15,38 @@ namespace Doxie.Core.XmlComments;
 
 public class DocParser
 {
+    private static readonly string[] FrameworkPaths =
+    [
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet", "shared", "Microsoft.NETCore.App"),
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet", "shared", "Microsoft.AspNetCore.App")
+    ];
+
     private XmlDocCommentReader xmlDocCommentReader;
+
+    public static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+    {
+        if (assembly == null) throw new ArgumentNullException(nameof(assembly));
+
+        // First try normal loading with assembly resolution
+        AppDomain.CurrentDomain.AssemblyResolve += ResolveFrameworkAssembly;
+        try
+        {
+            return assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            return ex.Types.Where(t => t != null);
+        }
+        catch (Exception)
+        {
+            // If normal loading fails completely, try metadata-only approach
+            return GetTypesMetadataOnly(assembly.Location);
+        }
+        finally
+        {
+            AppDomain.CurrentDomain.AssemblyResolve -= ResolveFrameworkAssembly;
+        }
+    }
 
     public AssemblyModel Parse(string assemblyFile, bool parseXmlCommentsFile = true)
     {
@@ -57,6 +88,62 @@ public class DocParser
             Trace.TraceError($"DLL {assemblyFile} : Parse Problem. {x.Message} => {x.Source}");
             return null;
         }
+    }
+
+    private static IEnumerable<Type> GetTypesMetadataOnly(string assemblyPath)
+    {
+        try
+        {
+            // Create resolver with core framework paths
+            var resolver = new PathAssemblyResolver(
+            [
+                typeof(object).Assembly.Location,
+                Path.GetDirectoryName(typeof(object).Assembly.Location),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet", "shared"),
+                assemblyPath
+            ]);
+
+            using var mlc = new MetadataLoadContext(resolver);
+            var assembly = mlc.LoadFromAssemblyPath(assemblyPath);
+            return assembly.GetTypes();
+        }
+        catch
+        {
+            return [];
+        }
+    }
+
+    private static Assembly ResolveFrameworkAssembly(object sender, ResolveEventArgs args)
+    {
+        var assemblyName = new AssemblyName(args.Name);
+
+        // Check already loaded assemblies first
+        var loadedAssembly = AppDomain.CurrentDomain.GetAssemblies()
+            .FirstOrDefault(a => a.GetName().Name == assemblyName.Name);
+
+        if (loadedAssembly != null) return loadedAssembly;
+
+        // Search framework directories
+        foreach (string frameworkPath in FrameworkPaths)
+        {
+            if (!Directory.Exists(frameworkPath)) continue;
+
+            // Get the highest version available
+            var versionDir = Directory.GetDirectories(frameworkPath)
+                .OrderByDescending(d => d)
+                .FirstOrDefault();
+
+            if (versionDir != null)
+            {
+                string dllPath = Path.Combine(versionDir, $"{assemblyName.Name}.dll");
+                if (File.Exists(dllPath))
+                {
+                    return Assembly.LoadFrom(dllPath);
+                }
+            }
+        }
+
+        return null;
     }
 
     private void FindTypes(Assembly assembly, ICollection<NamespaceModel> namespaces)
@@ -497,22 +584,5 @@ public class DocParser
         }
 
         return result;
-    }
-
-    private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
-    {
-        if (assembly == null)
-        {
-            throw new ArgumentNullException(nameof(assembly));
-        }
-
-        try
-        {
-            return assembly.GetTypes();
-        }
-        catch (ReflectionTypeLoadException x)
-        {
-            return x.Types.Where(t => t != null);
-        }
     }
 }
