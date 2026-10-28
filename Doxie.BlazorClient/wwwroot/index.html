@@ -5,8 +5,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Extenso</title>
-    <!-- Change or remove this for your project. In my case, it's needed for GitHub hosting -->
-    <!--<base href="/Extenso/" /> -->
+    <base href="/" />
+    <script>
+        // Project sites on GitHub Pages are served from /{repository}/.
+        // Local dev stays at /. Relative image and stylesheet paths then resolve in both places.
+        (function () {
+            if (!location.hostname.endsWith("github.io")) {
+                return;
+            }
+
+            var segment = location.pathname.split("/").filter(function (part) { return part; })[0];
+            if (segment) {
+                document.querySelector("base").href = "/" + segment + "/";
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 

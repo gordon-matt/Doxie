@@ -16,7 +16,7 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 
 1. Change **img/logo.png** to your own logo (keep same file name, else modify **NavMenu.razor**)
 2. Change the `href` for the **Fork me on GitHub** link in **MainLayout.razor**
-3. Change the `<title>` and `<base>` elements in **wwwroot/index.html**
+3. Change the `<title>` element in **wwwroot/index.html**. The base path stays `/` locally and becomes `/{repository}/` on GitHub Pages.
 4. Make any other changes you wish (such as Bootstrap theme).
 5. Run one of the help file generators (either WinForms or Console version)
 6. Grab the generated **assemblies.json** and place it in **Doxie.BlazorClient/wwwroot/js**

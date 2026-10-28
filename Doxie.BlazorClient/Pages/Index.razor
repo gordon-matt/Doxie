@@ -8,9 +8,9 @@
 <div class="card-deck">
     @foreach (var assembly in Context.Assemblies)
     {
-        string href = $"/assembly/{assembly.Id}";
+        string href = $"assembly/{assembly.Id}";
         <div id="@assembly.Id" class="card my-3">
-            <a href='assembly/@assembly.Id' style='position: absolute; top: 0; left: 0; height: 100%; width: 100%;'></a>
+            <a href="@href" style='position: absolute; top: 0; left: 0; height: 100%; width: 100%;'></a>
             <div class="card-body">
                 <h4 class="card-title">@assembly.Name</h4>
                 <p class="card-text">@assembly.FullName</p>

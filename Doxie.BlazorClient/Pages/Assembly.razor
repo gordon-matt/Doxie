@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" href="css/assembly-detail.css" />
 
+@if (selectedAssembly != null)
+{
 <h1>
     <span>@selectedAssembly.Name</span>&nbsp;
     <small class="text-muted">
@@ -272,6 +274,7 @@
         </div>
     }
 </div>
+}
 
 @code {
     [Parameter]
