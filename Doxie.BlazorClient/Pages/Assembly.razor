@@ -5,273 +5,273 @@
 
 <link rel="stylesheet" href="css/assembly-detail.css" />
 
-<Heading Size="HeadingSize.Is1">
-    <Span>@selectedAssembly.Name</Span>&nbsp;
-    <Small Class="text-muted">
-        <Span>@selectedAssembly.FullName</Span>
-    </Small>
-</Heading>
-<Row>
-    <Column ColumnSize="ColumnSize.Is3">
-        <Heading Size="HeadingSize.Is2" Class="namespace-title text-muted">Namespaces</Heading>
-        <Div ElementId="namespaces">
-            <ListGroup Flush="true">
+<h1>
+    <span>@selectedAssembly.Name</span>&nbsp;
+    <small class="text-muted">
+        <span>@selectedAssembly.FullName</span>
+    </small>
+</h1>
+<div class="row">
+    <div class="col-3">
+        <h2 class="namespace-title text-muted">Namespaces</h2>
+        <div id="namespaces">
+            <div class="list-group list-group-flush">
                 @foreach (var ns in selectedAssembly.Namespaces)
                 {
-                    <ListGroupItem Class="list-group-item-action flex-column align-items-start">
-                        <Div Class="d-flex w-100 justify-content-between">
-                            <Heading Size="HeadingSize.Is6" Class="mb-1 text-truncate" title="@ns.Name">@ns.Name</Heading>
-                        </Div>
-                        <Paragraph Class="mb-1">
-                            <Button hidden="@ns.Classes.IsNullOrEmpty()" Clicked="(() => ShowClasses(ns.Name))" Color="Color.Warning" title="# of classes">@ns.Classes.Count Classes</Button>
-                            <Button hidden="@ns.Structures.IsNullOrEmpty()" Clicked="(() => ShowStructures(ns.Name))" Color="Color.Info" title="# of structures">@ns.Structures.Count Structures</Button>
-                            <Button hidden="@ns.Interfaces.IsNullOrEmpty()" Clicked="(() => ShowInterfaces(ns.Name))" Color="Color.Primary" title="# of interfaces">@ns.Interfaces.Count Interfaces</Button>
-                            <Button hidden="@ns.Enumerations.IsNullOrEmpty()" Clicked="(() => ShowEnumerations(ns.Name))" Color="Color.Secondary" title="# of enumerations">@ns.Enumerations.Count Enums</Button>
-                            <Button hidden="@ns.Delegates.IsNullOrEmpty()" Clicked="(() => ShowDelegates(ns.Name))" Color="Color.Primary" title=" # of delegates">@ns.Delegates.Count Delegates</Button>
-                        </Paragraph>
-                    </ListGroupItem>
+                    <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1 text-truncate" title="@ns.Name">@ns.Name</h6>
+                        </div>
+                        <p class="mb-1">
+                            <button type="button" hidden="@ns.Classes.IsNullOrEmpty()" @onclick="() => ShowClasses(ns.Name)" class="btn btn-warning" title="# of classes">@ns.Classes.Count Classes</button>
+                            <button type="button" hidden="@ns.Structures.IsNullOrEmpty()" @onclick="() => ShowStructures(ns.Name)" class="btn btn-info" title="# of structures">@ns.Structures.Count Structures</button>
+                            <button type="button" hidden="@ns.Interfaces.IsNullOrEmpty()" @onclick="() => ShowInterfaces(ns.Name)" class="btn btn-primary" title="# of interfaces">@ns.Interfaces.Count Interfaces</button>
+                            <button type="button" hidden="@ns.Enumerations.IsNullOrEmpty()" @onclick="() => ShowEnumerations(ns.Name)" class="btn btn-secondary" title="# of enumerations">@ns.Enumerations.Count Enums</button>
+                            <button type="button" hidden="@ns.Delegates.IsNullOrEmpty()" @onclick="() => ShowDelegates(ns.Name)" class="btn btn-primary" title=" # of delegates">@ns.Delegates.Count Delegates</button>
+                        </p>
+                    </div>
                 }
-            </ListGroup>
-        </Div>
-    </Column>
+            </div>
+        </div>
+    </div>
 
     @if (selectedNamespace != null)
     {
-        <Column ColumnSize="ColumnSize.Is9" Class="border border-top-0 border-bottom-0 border-right-0">
-            <Heading Size="HeadingSize.Is2" ElementId="namespace-title" Class="namespace-title">@selectedNamespace.Name</Heading>
-            <Row>
-                <Column ColumnSize="ColumnSize.Is3">
-                    <Heading Size="HeadingSize.Is3">@selectedTypesTitle</Heading>
-                    <Div ElementId="types">
-                        <ListGroup Flush="true" ElementId="type-list">
+        <div class="col-9 border border-top-0 border-bottom-0 border-right-0">
+            <h2 id="namespace-title" class="namespace-title">@selectedNamespace.Name</h2>
+            <div class="row">
+                <div class="col-3">
+                    <h3>@selectedTypesTitle</h3>
+                    <div id="types">
+                        <div class="list-group list-group-flush" id="type-list">
                             @foreach (var type in selectedTypes)
                             {
-                                <ListGroupItem Class="list-group-item-action flex-column align-items-start">
-                                    <Button Clicked="(() => ShowType(type))" Color="Color.Link">
-                                        <Heading Size="HeadingSize.Is5" Class="list-group-item-heading text-truncate" title="@type.Name">@type.Name</Heading>
-                                    </Button>
-                                </ListGroupItem>
+                                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <button type="button" @onclick="() => ShowType(type)" class="btn btn-link">
+                                        <h5 class="list-group-item-heading text-truncate" title="@type.Name">@type.Name</h5>
+                                    </button>
+                                </div>
                             }
-                        </ListGroup>
-                    </Div>
-                </Column>
+                        </div>
+                    </div>
+                </div>
 
                 @if (selectedType != null)
                 {
-                    <Column ColumnSize="ColumnSize.Is9" ElementId="type-details">
-                        <Column ColumnSize="ColumnSize.Is12" ElementId="type-details-header">
-                            <Heading Size="HeadingSize.Is3" title="@selectedType.FullName">
+                    <div class="col-9" id="type-details">
+                        <div class="col-12" id="type-details-header">
+                            <h3 title="@selectedType.FullName">
                                 @selectedType.Name
-                                <Small>
-                                    <Badge Color="Color.Primary" hidden="@(!selectedType.IsPublic)">Public</Badge>
-                                    <Badge Color="Color.Secondary" hidden="@selectedType.IsPublic">Private</Badge>
-                                    <Badge Color="Color.Info" hidden="@(!selectedType.IsAbstract)">Abstract</Badge>
-                                    <Badge Color="Color.Warning" hidden="@(!selectedType.IsSealed)">Sealed</Badge>
-                                </Small>
-                            </Heading>
-                            <Breadcrumb>
-                                <BreadcrumbItem>Inherited</BreadcrumbItem>
-                                @foreach (var parent in selectedType.Parents)
-                                {
-                                    <BreadcrumbItem>@parent.Name</BreadcrumbItem>
-                                }
-                            </Breadcrumb>
-                            <Paragraph>@selectedType.Summary</Paragraph>
-                            <Paragraph Class="text-muted hidden">@selectedType.Remarks</Paragraph>
-                            <Paragraph Class="text-muted hidden">@selectedType.Example</Paragraph>
-                        </Column>
+                                <small>
+                                    <span class="badge badge-primary" hidden="@(!selectedType.IsPublic)">Public</span>
+                                    <span class="badge badge-secondary" hidden="@selectedType.IsPublic">Private</span>
+                                    <span class="badge badge-info" hidden="@(!selectedType.IsAbstract)">Abstract</span>
+                                    <span class="badge badge-warning" hidden="@(!selectedType.IsSealed)">Sealed</span>
+                                </small>
+                            </h3>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">Inherited</li>
+                                    @foreach (var parent in selectedType.Parents)
+                                    {
+                                        <li class="breadcrumb-item">@parent.Name</li>
+                                    }
+                                </ol>
+                            </nav>
+                            <p>@selectedType.Summary</p>
+                            <p class="text-muted hidden">@selectedType.Remarks</p>
+                            <p class="text-muted hidden">@selectedType.Example</p>
+                        </div>
 
-                        <Column ColumnSize="ColumnSize.Is12" ElementId="type-details-body">
-                            <Tabs>
-                                <Items>
-                                    <li class="nav-item" hidden="@selectedType.Constructors.IsNullOrEmpty()">
-                                        <a class="nav-link" href="#Constructors" aria-controls="Constructors" role="tab" data-toggle="tab">
-                                            <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Constructors
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" hidden="@selectedType.Methods.IsNullOrEmpty()">
-                                        <a class="nav-link" href="#Methods" aria-controls="Methods" role="tab" data-toggle="tab">
-                                            <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> Methods
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" hidden="@selectedType.Properties.IsNullOrEmpty()">
-                                        <a class="nav-link" href="#Properties" aria-controls="Properties" role="tab" data-toggle="tab">
-                                            <Image Source="img/property.gif" Border="Border.Is0" Text="property" /> Properties
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" hidden="@selectedType.Members.IsNullOrEmpty()">
-                                        <a class="nav-link" href="#Members" aria-controls="Members" role="tab" data-toggle="tab">
-                                            <Image Source="img/enumeration.gif" Border="Border.Is0" Text="members" /> Members
-                                        </a>
-                                    </li>
-                                </Items>
-                                <Content>
-                                    <TabPanel ElementId="Constructors" Name="Constructors" hidden="@selectedType.Constructors.IsNullOrEmpty()">
-                                        <Accordion>
-                                            @foreach (var ctor in selectedType.Constructors)
-                                            {
-                                                string elementId = $"collapse-{Guid.NewGuid()}";
-                                                <Collapse>
-                                                    <CollapseHeader>
-                                                        <Heading Size="HeadingSize.Is5" Class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@ctor.Id">
-                                                                <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> @(ctor.Name)(@ctor.FormattedParams)
-                                                            </button>
-                                                        </Heading>
-                                                    </CollapseHeader>
-                                                    <Div ElementId="@elementId" Class="collapse">
-                                                        <CardBody>
-                                                            <CardTitle Size="5">@ctor.FullName</CardTitle>
-                                                            <CardText>@ctor.Summary</CardText>
-                                                            <hr />
-                                                            <section hidden="@ctor.Parameters.IsNullOrEmpty()">
-                                                                <Heading Size="HeadingSize.Is6" Class="text-warning">Parameters</Heading>
-                                                                @foreach (var parameter in ctor.Parameters)
-                                                                {
-                                                                    <dl>
-                                                                        <dt>@parameter.Name</dt>
-                                                                        <dd class="small text-muted indent-1"><strong>Type:</strong> @parameter.TypeFullName</dd>
-                                                                        <dd class="small text-muted indent-1"><strong>Description:</strong> @parameter.Description</dd>
-                                                                    </dl>
-                                                                }
-                                                            </section>
-                                                            <section hidden="@ctor.Remarks.IsNullOrEmpty()">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Remarks</Heading>
-                                                                <Paragraph>@ctor.Remarks</Paragraph>
-                                                            </section>
-                                                            <section hidden="@ctor.Example.IsNullOrEmpty()">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Example</Heading>
-                                                                <Paragraph>@ctor.Example</Paragraph>
-                                                            </section>
-                                                            <section hidden="@ctor.Exceptions.IsNullOrEmpty()">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Exceptions</Heading>
-                                                                <Paragraph>@ctor.Exceptions</Paragraph>
-                                                            </section>
-                                                        </CardBody>
-                                                    </Div>
-                                                </Collapse>
-                                            }
-                                        </Accordion>
-                                    </TabPanel>
-                                    <TabPanel ElementId="Methods" Name="Methods" hidden="@selectedType.Methods.IsNullOrEmpty()">
-                                        <Accordion>
-                                            @foreach (var method in selectedType.Methods)
-                                            {
-                                                string elementId = $"collapse-{Guid.NewGuid()}";
-                                                <Collapse>
-                                                    <CollapseHeader>
-                                                        <Heading Size="HeadingSize.Is5" Class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@method.Id">
-                                                                <Image Source="img/method.gif" Border="Border.Is0" Text="method" /> @(method.Name)(@method.FormattedParams)
-                                                            </button>
-                                                        </Heading>
-                                                    </CollapseHeader>
-                                                    <Div ElementId="@elementId" Class="collapse">
-                                                        <CardBody>
-                                                            <CardTitle Size="5">@method.FullName</CardTitle>
-                                                            <CardText>@method.Summary</CardText>
-                                                            <hr />
-                                                            <section hidden="@method.Parameters.IsNullOrEmpty()">
-                                                                <Heading Size="HeadingSize.Is6" Class="text-warning">Parameters</Heading>
-                                                                @foreach (var parameter in method.Parameters)
-                                                                {
-                                                                    <dl>
-                                                                        <dt>@parameter.Name</dt>
-                                                                        <dd class="small text-muted indent-1"><strong>Type:</strong> @parameter.TypeFullName</dd>
-                                                                        <dd class="small text-muted indent-1"><strong>Description:</strong> @parameter.Description</dd>
-                                                                    </dl>
-                                                                }
-                                                            </section>
-                                                            <section hidden="@string.IsNullOrEmpty(method.Returns)">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6" Class="text-primary">Returns</Heading>
+                        <div class="col-12" id="type-details-body">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item" hidden="@selectedType.Constructors.IsNullOrEmpty()">
+                                    <a class="nav-link" href="#Constructors" aria-controls="Constructors" role="tab" data-toggle="tab">
+                                        <img src="img/method.gif" class="border-0" alt="method" /> Constructors
+                                    </a>
+                                </li>
+                                <li class="nav-item" hidden="@selectedType.Methods.IsNullOrEmpty()">
+                                    <a class="nav-link" href="#Methods" aria-controls="Methods" role="tab" data-toggle="tab">
+                                        <img src="img/method.gif" class="border-0" alt="method" /> Methods
+                                    </a>
+                                </li>
+                                <li class="nav-item" hidden="@selectedType.Properties.IsNullOrEmpty()">
+                                    <a class="nav-link" href="#Properties" aria-controls="Properties" role="tab" data-toggle="tab">
+                                        <img src="img/property.gif" class="border-0" alt="property" /> Properties
+                                    </a>
+                                </li>
+                                <li class="nav-item" hidden="@selectedType.Members.IsNullOrEmpty()">
+                                    <a class="nav-link" href="#Members" aria-controls="Members" role="tab" data-toggle="tab">
+                                        <img src="img/enumeration.gif" class="border-0" alt="members" /> Members
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="Constructors" role="tabpanel" hidden="@selectedType.Constructors.IsNullOrEmpty()">
+                                    <div class="accordion">
+                                        @foreach (var ctor in selectedType.Constructors)
+                                        {
+                                            string elementId = $"collapse-{Guid.NewGuid()}";
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">
+                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@ctor.Id">
+                                                            <img src="img/method.gif" class="border-0" alt="method" /> @(ctor.Name)(@ctor.FormattedParams)
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                <div id="@elementId" class="collapse">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@ctor.FullName</h5>
+                                                        <p class="card-text">@ctor.Summary</p>
+                                                        <hr />
+                                                        <section hidden="@ctor.Parameters.IsNullOrEmpty()">
+                                                            <h6 class="text-warning">Parameters</h6>
+                                                            @foreach (var parameter in ctor.Parameters)
+                                                            {
                                                                 <dl>
-                                                                    <dt>@method.ReturnTypeFullName</dt>
-                                                                    <dd class="small text-muted">@method.Returns</dd>
+                                                                    <dt>@parameter.Name</dt>
+                                                                    <dd class="small text-muted indent-1"><strong>Type:</strong> @parameter.TypeFullName</dd>
+                                                                    <dd class="small text-muted indent-1"><strong>Description:</strong> @parameter.Description</dd>
                                                                 </dl>
-                                                            </section>
-                                                            <section hidden="@string.IsNullOrEmpty(method.Remarks)">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Remarks</Heading>
-                                                                <Paragraph>@method.Remarks</Paragraph>
-                                                            </section>
-                                                            <section hidden="@string.IsNullOrEmpty(method.Example)">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Example</Heading>
-                                                                <pre class="prettyprint lang-cs" lang="cs"><code>@method.Example</code></pre>
-                                                            </section>
-                                                            <section hidden="@string.IsNullOrEmpty(method.Exceptions)">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Exceptions</Heading>
-                                                                <Paragraph>@method.Exceptions</Paragraph>
-                                                            </section>
-                                                        </CardBody>
-                                                    </Div>
-                                                </Collapse>
-                                            }
-                                        </Accordion>
-                                    </TabPanel>
-                                    <TabPanel ElementId="Properties" Name="Properties" hidden="@selectedType.Properties.IsNullOrEmpty()">
-                                        <Accordion>
-                                            @foreach (var property in selectedType.Properties)
-                                            {
-                                                string elementId = $"collapse-{Guid.NewGuid()}";
-                                                <Collapse>
-                                                    <CollapseHeader>
-                                                        <Heading Size="HeadingSize.Is5" Class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@property.Id">
-                                                                <Image Source="img/property.gif" Border="Border.Is0" Text="method" /> @property.Name
-                                                            </button>
-                                                        </Heading>
-                                                    </CollapseHeader>
-                                                    <Div ElementId="@elementId" Class="collapse">
-                                                        <CardBody>
-                                                            <CardTitle Size="5">@property.FullName</CardTitle>
-                                                            <CardText>@property.Summary</CardText>
+                                                            }
+                                                        </section>
+                                                        <section hidden="@ctor.Remarks.IsNullOrEmpty()">
                                                             <hr />
-                                                            <section hidden="@string.IsNullOrEmpty(property.Remarks)">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Remarks</Heading>
-                                                                <Paragraph>@property.Remarks</Paragraph>
-                                                            </section>
-                                                            <section hidden="@string.IsNullOrEmpty(property.Example)">
-                                                                <hr />
-                                                                <Heading Size="HeadingSize.Is6">Example</Heading>
-                                                                <Paragraph>@property.Example</Paragraph>
-                                                            </section>
-                                                        </CardBody>
-                                                    </Div>
-                                                </Collapse>
-                                            }
-                                        </Accordion>
-                                    </TabPanel>
-                                    <TabPanel ElementId="Members" Name="Members" hidden="@selectedType.Members.IsNullOrEmpty()">
-                                        <ListGroup>
-                                            @foreach (var member in selectedType.Members)
-                                            {
-                                                <ListGroupItem>
-                                                    <Heading Size="HeadingSize.Is6" Class="list-group-item-heading">
-                                                        <Image Source="img/enumeration.gif" Border="Border.Is0" Text="members" /> @member.Name
-                                                    </Heading>
-                                                    <Div Class="list-group-item-text">
-                                                        <Small>@member.Description</Small>
-                                                    </Div>
-                                                </ListGroupItem>
-                                            }
-                                        </ListGroup>
-                                    </TabPanel>
-                                </Content>
-                            </Tabs>
-                        </Column>
-                    </Column>
+                                                            <h6>Remarks</h6>
+                                                            <p>@ctor.Remarks</p>
+                                                        </section>
+                                                        <section hidden="@ctor.Example.IsNullOrEmpty()">
+                                                            <hr />
+                                                            <h6>Example</h6>
+                                                            <p>@ctor.Example</p>
+                                                        </section>
+                                                        <section hidden="@ctor.Exceptions.IsNullOrEmpty()">
+                                                            <hr />
+                                                            <h6>Exceptions</h6>
+                                                            <p>@ctor.Exceptions</p>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="Methods" role="tabpanel" hidden="@selectedType.Methods.IsNullOrEmpty()">
+                                    <div class="accordion">
+                                        @foreach (var method in selectedType.Methods)
+                                        {
+                                            string elementId = $"collapse-{Guid.NewGuid()}";
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">
+                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@method.Id">
+                                                            <img src="img/method.gif" class="border-0" alt="method" /> @(method.Name)(@method.FormattedParams)
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                <div id="@elementId" class="collapse">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@method.FullName</h5>
+                                                        <p class="card-text">@method.Summary</p>
+                                                        <hr />
+                                                        <section hidden="@method.Parameters.IsNullOrEmpty()">
+                                                            <h6 class="text-warning">Parameters</h6>
+                                                            @foreach (var parameter in method.Parameters)
+                                                            {
+                                                                <dl>
+                                                                    <dt>@parameter.Name</dt>
+                                                                    <dd class="small text-muted indent-1"><strong>Type:</strong> @parameter.TypeFullName</dd>
+                                                                    <dd class="small text-muted indent-1"><strong>Description:</strong> @parameter.Description</dd>
+                                                                </dl>
+                                                            }
+                                                        </section>
+                                                        <section hidden="@string.IsNullOrEmpty(method.Returns)">
+                                                            <hr />
+                                                            <h6 class="text-primary">Returns</h6>
+                                                            <dl>
+                                                                <dt>@method.ReturnTypeFullName</dt>
+                                                                <dd class="small text-muted">@method.Returns</dd>
+                                                            </dl>
+                                                        </section>
+                                                        <section hidden="@string.IsNullOrEmpty(method.Remarks)">
+                                                            <hr />
+                                                            <h6>Remarks</h6>
+                                                            <p>@method.Remarks</p>
+                                                        </section>
+                                                        <section hidden="@string.IsNullOrEmpty(method.Example)">
+                                                            <hr />
+                                                            <h6>Example</h6>
+                                                            <pre class="prettyprint lang-cs" lang="cs"><code>@method.Example</code></pre>
+                                                        </section>
+                                                        <section hidden="@string.IsNullOrEmpty(method.Exceptions)">
+                                                            <hr />
+                                                            <h6>Exceptions</h6>
+                                                            <p>@method.Exceptions</p>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="Properties" role="tabpanel" hidden="@selectedType.Properties.IsNullOrEmpty()">
+                                    <div class="accordion">
+                                        @foreach (var property in selectedType.Properties)
+                                        {
+                                            string elementId = $"collapse-{Guid.NewGuid()}";
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h5 class="mb-0">
+                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@property.Id">
+                                                            <img src="img/property.gif" class="border-0" alt="method" /> @property.Name
+                                                        </button>
+                                                    </h5>
+                                                </div>
+                                                <div id="@elementId" class="collapse">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">@property.FullName</h5>
+                                                        <p class="card-text">@property.Summary</p>
+                                                        <hr />
+                                                        <section hidden="@string.IsNullOrEmpty(property.Remarks)">
+                                                            <hr />
+                                                            <h6>Remarks</h6>
+                                                            <p>@property.Remarks</p>
+                                                        </section>
+                                                        <section hidden="@string.IsNullOrEmpty(property.Example)">
+                                                            <hr />
+                                                            <h6>Example</h6>
+                                                            <p>@property.Example</p>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="Members" role="tabpanel" hidden="@selectedType.Members.IsNullOrEmpty()">
+                                    <div class="list-group">
+                                        @foreach (var member in selectedType.Members)
+                                        {
+                                            <div class="list-group-item">
+                                                <h6 class="list-group-item-heading">
+                                                    <img src="img/enumeration.gif" class="border-0" alt="members" /> @member.Name
+                                                </h6>
+                                                <div class="list-group-item-text">
+                                                    <small>@member.Description</small>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 }
-            </Row>
-        </Column>
+            </div>
+        </div>
     }
-</Row>
+</div>
 
 @code {
     [Parameter]
