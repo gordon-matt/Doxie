@@ -1,22 +1,27 @@
 ﻿@page "/"
 @inject HttpClient Http
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Assemblies</PageTitle>
 
 <link href="css/index-cards.css" rel="stylesheet" />
 
-<div class="card-deck">
+<header class="page-header">
+    <h1>Assemblies</h1>
+    @if (Context.Assemblies.Count > 0)
+    {
+        <p class="text-muted">@Context.Assemblies.Count documented @(Context.Assemblies.Count == 1 ? "assembly" : "assemblies")</p>
+    }
+</header>
+
+<div class="assembly-grid">
     @foreach (var assembly in Context.Assemblies)
     {
         string href = $"assembly/{assembly.Id}";
-        <div id="@assembly.Id" class="card my-3">
-            <a href="@href" style='position: absolute; top: 0; left: 0; height: 100%; width: 100%;'></a>
-            <div class="card-body">
-                <h4 class="card-title">@assembly.Name</h4>
-                <p class="card-text">@assembly.FullName</p>
-                <a href="@href" class="card-link" alt="@assembly.Name">View</a>
-            </div>
-        </div>
+        <a id="@assembly.Id" class="assembly-card" href="@href">
+            <h2 title="@assembly.Name">@assembly.Name</h2>
+            <p title="@assembly.FullName">@assembly.FullName</p>
+            <span class="assembly-card-action">View documentation</span>
+        </a>
     }
 </div>
 

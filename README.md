@@ -15,7 +15,7 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 ## Instructions
 
 1. Change **img/logo.png** to your own logo (keep same file name, else modify **NavMenu.razor**)
-2. Change the `href` for the **Fork me on GitHub** link in **MainLayout.razor**
+2. Change the `href` for the **GitHub** link in **NavMenu.razor**
 3. Change the `<title>` element in **wwwroot/index.html**. The base path stays `/` locally and becomes `/{repository}/` on GitHub Pages.
 4. Make any other changes you wish (such as Bootstrap theme).
 5. Run one of the help file generators (either WinForms or Console version)

@@ -1,5 +1,4 @@
-﻿<h3>Assembly</h3>
-@page "/assembly/{id:guid}"
+﻿@page "/assembly/{id:guid}"
 @inject HttpClient Http
 @inject IJSRuntime JS
 
@@ -7,70 +6,75 @@
 
 @if (selectedAssembly != null)
 {
-<h1>
-    <span>@selectedAssembly.Name</span>&nbsp;
-    <small class="text-muted">
-        <span>@selectedAssembly.FullName</span>
-    </small>
-</h1>
-<div class="row">
-    <div class="col-3">
-        <h2 class="namespace-title text-muted">Namespaces</h2>
+<header class="assembly-header">
+    <h1>@selectedAssembly.Name</h1>
+    <p class="assembly-fullname">@selectedAssembly.FullName</p>
+</header>
+<div class="doc-layout">
+    <section class="doc-pane">
+        <h2 class="pane-label">Namespaces</h2>
         <div id="namespaces">
             <div class="list-group list-group-flush">
                 @foreach (var ns in selectedAssembly.Namespaces)
                 {
-                    <div class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1 text-truncate" title="@ns.Name">@ns.Name</h6>
+                    <div class="list-group-item namespace-item @(selectedNamespace?.Name == ns.Name ? "is-current" : null)">
+                        <h3 class="text-truncate" title="@ns.Name">@ns.Name</h3>
+                        <div class="namespace-counts">
+                            <button type="button" hidden="@ns.Classes.IsNullOrEmpty()" @onclick="() => ShowClasses(ns.Name)" class="@CountClass(ns.Name, "Classes", "classes")" title="# of classes">@ns.Classes.Count Classes</button>
+                            <button type="button" hidden="@ns.Structures.IsNullOrEmpty()" @onclick="() => ShowStructures(ns.Name)" class="@CountClass(ns.Name, "Structures", "structures")" title="# of structures">@ns.Structures.Count Structures</button>
+                            <button type="button" hidden="@ns.Interfaces.IsNullOrEmpty()" @onclick="() => ShowInterfaces(ns.Name)" class="@CountClass(ns.Name, "Interfaces", "interfaces")" title="# of interfaces">@ns.Interfaces.Count Interfaces</button>
+                            <button type="button" hidden="@ns.Enumerations.IsNullOrEmpty()" @onclick="() => ShowEnumerations(ns.Name)" class="@CountClass(ns.Name, "Enumerations", "enums")" title="# of enumerations">@ns.Enumerations.Count Enums</button>
+                            <button type="button" hidden="@ns.Delegates.IsNullOrEmpty()" @onclick="() => ShowDelegates(ns.Name)" class="@CountClass(ns.Name, "Delegates", "delegates")" title="# of delegates">@ns.Delegates.Count Delegates</button>
                         </div>
-                        <p class="mb-1">
-                            <button type="button" hidden="@ns.Classes.IsNullOrEmpty()" @onclick="() => ShowClasses(ns.Name)" class="btn btn-warning" title="# of classes">@ns.Classes.Count Classes</button>
-                            <button type="button" hidden="@ns.Structures.IsNullOrEmpty()" @onclick="() => ShowStructures(ns.Name)" class="btn btn-info" title="# of structures">@ns.Structures.Count Structures</button>
-                            <button type="button" hidden="@ns.Interfaces.IsNullOrEmpty()" @onclick="() => ShowInterfaces(ns.Name)" class="btn btn-primary" title="# of interfaces">@ns.Interfaces.Count Interfaces</button>
-                            <button type="button" hidden="@ns.Enumerations.IsNullOrEmpty()" @onclick="() => ShowEnumerations(ns.Name)" class="btn btn-secondary" title="# of enumerations">@ns.Enumerations.Count Enums</button>
-                            <button type="button" hidden="@ns.Delegates.IsNullOrEmpty()" @onclick="() => ShowDelegates(ns.Name)" class="btn btn-primary" title=" # of delegates">@ns.Delegates.Count Delegates</button>
-                        </p>
                     </div>
                 }
             </div>
         </div>
-    </div>
+    </section>
 
-    @if (selectedNamespace != null)
+    @if (selectedNamespace == null)
     {
-        <div class="col-9 border border-top-0 border-bottom-0 border-right-0">
-            <h2 id="namespace-title" class="namespace-title">@selectedNamespace.Name</h2>
-            <div class="row">
-                <div class="col-3">
-                    <h3>@selectedTypesTitle</h3>
-                    <div id="types">
-                        <div class="list-group list-group-flush" id="type-list">
-                            @foreach (var type in selectedTypes)
-                            {
-                                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <button type="button" @onclick="() => ShowType(type)" class="btn btn-link">
-                                        <h5 class="list-group-item-heading text-truncate" title="@type.Name">@type.Name</h5>
-                                    </button>
-                                </div>
-                            }
+        <section class="doc-pane details-empty span-rest">
+            <p>Choose a namespace to browse its types.</p>
+        </section>
+    }
+    else
+    {
+        <section class="doc-pane">
+            <h2 id="namespace-title" class="pane-label current">@selectedTypesTitle</h2>
+            <div id="types">
+                <div class="list-group list-group-flush" id="type-list">
+                    @foreach (var type in selectedTypes)
+                    {
+                        <div class="list-group-item">
+                            <button type="button" @onclick="() => ShowType(type)" class="btn btn-link type-link @(selectedType == type ? "active" : null)">
+                                <span class="text-truncate d-block" title="@type.Name">@type.Name</span>
+                            </button>
                         </div>
-                    </div>
+                    }
                 </div>
+            </div>
+        </section>
 
-                @if (selectedType != null)
-                {
-                    <div class="col-9" id="type-details">
-                        <div class="col-12" id="type-details-header">
-                            <h3 title="@selectedType.FullName">
+        <section class="doc-pane" id="type-details">
+            @if (selectedType == null)
+            {
+                <div class="details-empty">
+                    <p>Select a type to read its documentation.</p>
+                </div>
+            }
+            else
+            {
+                <div id="type-details-header">
+                            <h2 title="@selectedType.FullName">
                                 @selectedType.Name
                                 <small>
-                                    <span class="badge badge-primary" hidden="@(!selectedType.IsPublic)">Public</span>
-                                    <span class="badge badge-secondary" hidden="@selectedType.IsPublic">Private</span>
-                                    <span class="badge badge-info" hidden="@(!selectedType.IsAbstract)">Abstract</span>
-                                    <span class="badge badge-warning" hidden="@(!selectedType.IsSealed)">Sealed</span>
+                                    <span class="badge badge-pill badge-primary" hidden="@(!selectedType.IsPublic)">Public</span>
+                                    <span class="badge badge-pill badge-secondary" hidden="@selectedType.IsPublic">Private</span>
+                                    <span class="badge badge-pill badge-info" hidden="@(!selectedType.IsAbstract)">Abstract</span>
+                                    <span class="badge badge-pill badge-warning" hidden="@(!selectedType.IsSealed)">Sealed</span>
                                 </small>
-                            </h3>
+                            </h2>
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">Inherited</li>
@@ -80,12 +84,12 @@
                                     }
                                 </ol>
                             </nav>
-                            <p>@selectedType.Summary</p>
+                            <p class="summary">@selectedType.Summary</p>
                             <p class="text-muted hidden">@selectedType.Remarks</p>
                             <p class="text-muted hidden">@selectedType.Example</p>
                         </div>
 
-                        <div class="col-12" id="type-details-body">
+                        <div id="type-details-body">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item" hidden="@selectedType.Constructors.IsNullOrEmpty()">
                                     <a class="nav-link" href="#Constructors" aria-controls="Constructors" role="tab" data-toggle="tab">
@@ -117,7 +121,7 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h5 class="mb-0">
-                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@ctor.Id">
+                                                        <button type="button" class="btn btn-link collapsed member-toggle" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@ctor.Id">
                                                             <img src="img/method.gif" class="border-0" alt="method" /> @(ctor.Name)(@ctor.FormattedParams)
                                                         </button>
                                                     </h5>
@@ -167,7 +171,7 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h5 class="mb-0">
-                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@method.Id">
+                                                        <button type="button" class="btn btn-link collapsed member-toggle" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@method.Id">
                                                             <img src="img/method.gif" class="border-0" alt="method" /> @(method.Name)(@method.FormattedParams)
                                                         </button>
                                                     </h5>
@@ -225,7 +229,7 @@
                                             <div class="card">
                                                 <div class="card-header">
                                                     <h5 class="mb-0">
-                                                        <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@property.Id">
+                                                        <button type="button" class="btn btn-link collapsed member-toggle" data-toggle="collapse" data-target="#@elementId" aria-expanded="false" aria-controls="collapse-@property.Id">
                                                             <img src="img/property.gif" class="border-0" alt="method" /> @property.Name
                                                         </button>
                                                     </h5>
@@ -252,13 +256,13 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="Members" role="tabpanel" hidden="@selectedType.Members.IsNullOrEmpty()">
-                                    <div class="list-group">
+                                    <div class="list-group member-list">
                                         @foreach (var member in selectedType.Members)
                                         {
                                             <div class="list-group-item">
-                                                <h6 class="list-group-item-heading">
+                                                <h3 class="member-name">
                                                     <img src="img/enumeration.gif" class="border-0" alt="members" /> @member.Name
-                                                </h6>
+                                                </h3>
                                                 <div class="list-group-item-text">
                                                     <small>@member.Description</small>
                                                 </div>
@@ -268,10 +272,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
-        </div>
+            }
+        </section>
     }
 </div>
 }
@@ -283,8 +285,15 @@
     private AssemblyModel selectedAssembly;
     private NamespaceModel selectedNamespace;
     private string selectedTypesTitle;
+    private string selectedGroup = "";
     private ICollection<TypeModel> selectedTypes = new List<TypeModel>();
     private TypeModel selectedType;
+
+    private bool IsGroup(string namespaceName, string group) =>
+        selectedNamespace?.Name == namespaceName && selectedGroup == group;
+
+    private string CountClass(string namespaceName, string group, string tone) =>
+        $"btn btn-sm count-btn count-{tone}{(IsGroup(namespaceName, group) ? " active" : "")}";
 
     protected override async Task OnInitializedAsync()
     {
@@ -300,6 +309,7 @@
     {
         ChangeNamespace(namespaceName);
         selectedTypesTitle = "Classes";
+        selectedGroup = "Classes";
         selectedTypes = selectedNamespace.Classes;
     }
 
@@ -307,6 +317,7 @@
     {
         ChangeNamespace(namespaceName);
         selectedTypesTitle = "Structures";
+        selectedGroup = "Structures";
         selectedTypes = selectedNamespace.Structures;
     }
 
@@ -314,6 +325,7 @@
     {
         ChangeNamespace(namespaceName);
         selectedTypesTitle = "Interfaces";
+        selectedGroup = "Interfaces";
         selectedTypes = selectedNamespace.Interfaces;
     }
 
@@ -321,6 +333,7 @@
     {
         ChangeNamespace(namespaceName);
         selectedTypesTitle = "Enumerations";
+        selectedGroup = "Enumerations";
         selectedTypes = selectedNamespace.Enumerations;
     }
 
@@ -328,6 +341,7 @@
     {
         ChangeNamespace(namespaceName);
         selectedTypesTitle = "Delegates";
+        selectedGroup = "Delegates";
         selectedTypes = selectedNamespace.Delegates;
     }
 
