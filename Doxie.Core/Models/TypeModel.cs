@@ -14,12 +14,21 @@ public class TypeModel : BaseCommentsModel
         Constructors = [];
         Methods = [];
         Properties = [];
+        Events = [];
+        Fields = [];
         Members = [];
         Parents = [];
+        Interfaces = [];
     }
 
     [JsonProperty]
     public ICollection<ConstructorModel> Constructors { get; set; }
+
+    [JsonProperty]
+    public ICollection<EventModel> Events { get; set; }
+
+    [JsonProperty]
+    public ICollection<FieldModel> Fields { get; set; }
 
     [JsonProperty]
     public bool IsAbstract { get; set; }
@@ -35,6 +44,9 @@ public class TypeModel : BaseCommentsModel
 
     [JsonProperty]
     public bool IsSealed { get; set; }
+
+    [JsonProperty]
+    public ICollection<string> Interfaces { get; set; }
 
     [JsonProperty]
     public ICollection<MemberSummaryModel> Members { get; set; }

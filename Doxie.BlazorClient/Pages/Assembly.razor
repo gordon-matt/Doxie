@@ -85,6 +85,10 @@
                                 </ol>
                             </nav>
                             <p class="summary">@selectedType.Summary</p>
+                            @if (!selectedType.Interfaces.IsNullOrEmpty())
+                            {
+                                <p class="implements">Implements @string.Join(", ", selectedType.Interfaces)</p>
+                            }
                             <p class="text-muted hidden">@selectedType.Remarks</p>
                             <p class="text-muted hidden">@selectedType.Example</p>
                         </div>
@@ -104,6 +108,16 @@
                                 <li class="nav-item" hidden="@selectedType.Properties.IsNullOrEmpty()">
                                     <a class="nav-link" href="#Properties" aria-controls="Properties" role="tab" data-toggle="tab">
                                         <img src="img/property.gif" class="border-0" alt="property" /> Properties
+                                    </a>
+                                </li>
+                                <li class="nav-item" hidden="@selectedType.Events.IsNullOrEmpty()">
+                                    <a class="nav-link" href="#Events" aria-controls="Events" role="tab" data-toggle="tab">
+                                        <img src="img/property.gif" class="border-0" alt="event" /> Events
+                                    </a>
+                                </li>
+                                <li class="nav-item" hidden="@selectedType.Fields.IsNullOrEmpty()">
+                                    <a class="nav-link" href="#Fields" aria-controls="Fields" role="tab" data-toggle="tab">
+                                        <img src="img/enumeration.gif" class="border-0" alt="field" /> Fields
                                     </a>
                                 </li>
                                 <li class="nav-item" hidden="@selectedType.Members.IsNullOrEmpty()">
@@ -250,6 +264,34 @@
                                                             <p>@property.Example</p>
                                                         </section>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="Fields" role="tabpanel" hidden="@selectedType.Fields.IsNullOrEmpty()">
+                                    <div class="list-group member-list">
+                                        @foreach (var field in selectedType.Fields)
+                                        {
+                                            <div class="list-group-item">
+                                                <h3 class="member-name">@field.Name</h3>
+                                                <div class="list-group-item-text">
+                                                    <div class="small text-muted">@((field.IsConst ? "const " : field.IsStatic ? "static " : "") + field.TypeFullName)</div>
+                                                    <div class="doc-text">@field.Summary</div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="Events" role="tabpanel" hidden="@selectedType.Events.IsNullOrEmpty()">
+                                    <div class="list-group member-list">
+                                        @foreach (var eventModel in selectedType.Events)
+                                        {
+                                            <div class="list-group-item">
+                                                <h3 class="member-name">@eventModel.Name</h3>
+                                                <div class="list-group-item-text">
+                                                    <div class="small text-muted">@eventModel.TypeFullName</div>
+                                                    <div class="doc-text">@eventModel.Summary</div>
                                                 </div>
                                             </div>
                                         }

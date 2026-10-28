@@ -3,7 +3,8 @@
 // Original Code: https://github.com/RaynaldM/autohelp
 // ----------------------------------------------------------------------------
 
-using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace Doxie.Core.Models;
@@ -30,7 +31,16 @@ public class BaseCommentsModel
     public string FullName { get; set; }
 
     [JsonProperty]
-    public string Id => UseHashCodeForId ? FullName.GetHashCode().ToString(CultureInfo.InvariantCulture) : Name;
+    public string Id => UseHashCodeForId ? StableId(FullName) : Name;
+
+    /// <summary>
+    /// String hash codes change between processes, so overload ids are derived from the signature.
+    /// </summary>
+    private static string StableId(string value)
+    {
+        byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(value ?? string.Empty));
+        return System.Convert.ToHexString(hash)[..12];
+    }
 
     [JsonProperty]
     public bool LoadError { get; set; }

@@ -205,6 +205,19 @@
     margin-bottom: 0.85rem;
 }
 
+.summary,
+#type-details .card-text,
+#type-details section p,
+.doc-text,
+.member-list .list-group-item-text {
+    white-space: pre-line;
+}
+
+.implements {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
 .nav-tabs {
     border-bottom: 1px solid var(--line);
     flex-wrap: wrap;

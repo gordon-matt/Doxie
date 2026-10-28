@@ -22,32 +22,26 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Schema;
 
 namespace Doxie.Core.XmlComments;
 
 public class XmlDocCommentReadPolicy : IXmlDocCommentReadPolicy
 {
-    private readonly XmlReaderSettings xmlReaderSettings;
     private readonly XDocument xDocument;
-
-    private string XmlDocCommentsFullPath { get; }
 
     public XmlDocCommentReadPolicy(string xmlDocCommentsFullPath)
     {
-        xmlReaderSettings = new XmlReaderSettings { ValidationType = ValidationType.Schema };
-
-        using (var schema = typeof(XmlDocCommentReadPolicy).Assembly.GetManifestResourceStream("Doxie.Core.XmlComments.Schema.xsd"))
+        // Compiler documentation files contain tags the historical schema does not describe.
+        // Rejecting the file here drops the whole assembly, so the document is loaded as XML only.
+        var settings = new XmlReaderSettings
         {
-            xmlReaderSettings.Schemas.Add(XmlSchema.Read(schema ?? throw new InvalidOperationException("Schema.xsd not found"), null));
-        }
+            DtdProcessing = DtdProcessing.Prohibit
+        };
 
-        XmlDocCommentsFullPath = xmlDocCommentsFullPath;
-        using var reader = CreateXmlReader();
+        using var stream = File.OpenRead(xmlDocCommentsFullPath);
+        using var reader = XmlReader.Create(stream, settings);
         xDocument = XDocument.Load(reader);
     }
-
-    protected XmlReader CreateXmlReader() => XmlReader.Create(File.OpenText(XmlDocCommentsFullPath), xmlReaderSettings);
 
     /// <summary>
     /// <see cref="IXmlDocCommentReadPolicy.ReadMember"/>
