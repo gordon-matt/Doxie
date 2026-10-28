@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Remove="DocComments.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="XmlComments\Schema.xsd" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Extenso.Core" Version="9.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.CodeDom" Version="9.0.4" />
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.4" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="DocComments.xsd" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="XmlComments\Schema.xsd" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Extenso.Core" Version="10.2.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="System.CodeDom" Version="10.0.14" />
+		<PackageReference Include="System.Reflection.MetadataLoadContext" Version="10.0.14" />
+	</ItemGroup>
 </Project>

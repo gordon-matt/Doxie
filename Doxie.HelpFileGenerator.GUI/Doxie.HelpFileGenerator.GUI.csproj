@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <OutputType>WinExe</OutputType>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Doxie.Core\Doxie.Core.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Extenso.Core" Version="9.2.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.CodeDom" Version="9.0.4" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<OutputType>WinExe</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Doxie.Core\Doxie.Core.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Extenso.Core" Version="10.2.0" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="System.CodeDom" Version="10.0.14" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+	</ItemGroup>
 </Project>

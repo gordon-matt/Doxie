@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Doxie.BlazorClient/Doxie.BlazorClient.csproj" />
+  <Project Path="Doxie.Core/Doxie.Core.csproj" />
+  <Project Path="Doxie.HelpFileGenerator.Console/Doxie.HelpFileGenerator.Console.csproj" />
+  <Project Path="Doxie.HelpFileGenerator.GUI/Doxie.HelpFileGenerator.GUI.csproj" />
+</Solution>
