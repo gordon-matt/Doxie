@@ -33,7 +33,7 @@ public class DocParser
     /// Loads every selected documentation file before parsing, so an implementing
     /// class can inherit comments from an interface that lives in another assembly.
     /// </summary>
-    public void PrepareDocumentation(IEnumerable<string> assemblyFiles)
+    public void PrepareDocumentation(IEnumerable<string> assemblyFiles, IEnumerable<string> probeDirectories = null)
     {
         commentReaders.Clear();
         missingDocumentation.Clear();
@@ -42,6 +42,16 @@ public class DocParser
         {
             RememberDirectory(Path.GetDirectoryName(assemblyFile));
             RegisterDocumentation(assemblyFile);
+        }
+
+        if (probeDirectories == null)
+        {
+            return;
+        }
+
+        foreach (string directory in probeDirectories)
+        {
+            RememberDirectory(directory);
         }
     }
 

@@ -1,15 +1,15 @@
-﻿namespace Doxie.HelpFileGenerator.GUI;
+﻿using System.Runtime.Versioning;
+
+[assembly: SupportedOSPlatform("windows")]
+
+namespace Doxie.HelpFileGenerator.GUI;
 
 internal static class Program
 {
-    /// <summary>
-    /// The main entry point for the application.
-    /// </summary>
     [STAThread]
     private static void Main()
     {
-        Application.EnableVisualStyles();
-        Application.SetCompatibleTextRenderingDefault(false);
+        ApplicationConfiguration.Initialize();
         Application.Run(new MainForm());
     }
 }

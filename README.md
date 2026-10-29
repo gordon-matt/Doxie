@@ -25,15 +25,9 @@ You can find a working demo I deployed to **gh-pages** for my Extenso project, h
 9. Make sure you have the **.gitattributes** and **.nojekyll** files present
 10. Push to Git
 
-> **NOTE** Regarding step 5: For .NET Core assemblies you need to ensure that all related assemblies are present in the same location as the ones you want to generate pages from. Otherwise the resulting documentation will contain error messages caused by **FileNotFoundException**s. It can be a pain to figure out what assemblies you need to copy, so there's a simple trick you can use to make this very easy:
-
-1. Add a new project to your solution and call it something like **DoxieDummy** or whatever prefer.
-2. Reference all the projects in the solution that you want documentation for.
-3. Now the important part: Edit the **.csproj** file for this dummy project and add the following: `<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>`. This will ensure ALL assemblies are copied locally to the output directory. Below is a screenshot example:
-
-![Dummy Project](https://github.com/gordon-matt/Doxie/blob/master/_Misc/Dummy.PNG)
-
-4. Now all you have to do is pass that directory path to one of the "Help File Generators" and tell it which of those assemblies should be documented.
+> **NOTE** Regarding step 5: The WinForms generator can open a `.sln` or `.slnx` and select the class libraries for you. If a project has not been built, or has no XML documentation file, it offers to build the solution in Release with documentation turned on. You can still point it at a folder of assemblies instead.
+>
+> Related assemblies have to be available while the pages are generated, or the result contains **FileNotFoundException** messages. A solution scan uses each project's output directory and its NuGet packages. If you use the console generator, or you would rather gather everything into one folder, add a small project that references the libraries you want to document and set `<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>` in that project. Build it, then point the generator at that output folder and choose which assemblies to include.
 
 ## License
 

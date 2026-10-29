@@ -8,9 +8,9 @@ public static class JsonHelpFileGenerator
 {
     private static readonly DocParser docParser = new();
 
-    public static void Generate(IEnumerable<string> selectedAssemblyPaths, string outputPath)
+    public static void Generate(IEnumerable<string> selectedAssemblyPaths, string outputPath, IEnumerable<string> probeDirectories = null)
     {
-        docParser.PrepareDocumentation(selectedAssemblyPaths);
+        docParser.PrepareDocumentation(selectedAssemblyPaths, probeDirectories);
         var assemblies = GetAssemblies(selectedAssemblyPaths);
         string outputFileName = Path.Combine(outputPath, "assemblies.json");
         assemblies.JsonSerialize().ToFile(outputFileName);
