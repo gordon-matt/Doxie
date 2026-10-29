@@ -2,8 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<StartupObject>
-		</StartupObject>
+		<Version>2.0.0</Version>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Extenso.Core" Version="10.2.0" />

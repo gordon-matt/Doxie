@@ -8,6 +8,7 @@
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<Nullable>enable</Nullable>
 		<ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+		<Version>2.0.0</Version>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Doxie.Core\Doxie.Core.csproj" />
