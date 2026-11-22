@@ -13,6 +13,7 @@ using Doxie.Core.Models;
 
 namespace Doxie.Core.XmlComments;
 
+/// <summary>Reads assemblies and their XML documentation into the help-file models.</summary>
 public class DocParser
 {
     private static readonly string[] FrameworkPaths =
@@ -33,6 +34,11 @@ public class DocParser
     /// Loads every selected documentation file before parsing, so an implementing
     /// class can inherit comments from an interface that lives in another assembly.
     /// </summary>
+    /// <param name="assemblyFiles">Assemblies whose documentation files are opened now.</param>
+    /// <param name="probeDirectories">
+    /// Extra directories remembered for dependency resolution. <see langword="null"/> adds none.
+    /// This does not parse the assemblies.
+    /// </param>
     public void PrepareDocumentation(IEnumerable<string> assemblyFiles, IEnumerable<string> probeDirectories = null)
     {
         commentReaders.Clear();
@@ -55,6 +61,13 @@ public class DocParser
         }
     }
 
+    /// <summary>
+    /// Types in the assembly. A <see langword="null"/> assembly throws. Types that fail to load
+    /// are omitted. When ordinary loading throws, the types are read from metadata instead.
+    /// </summary>
+    /// <param name="assembly">Assembly to inspect.</param>
+    /// <returns>The types that could be loaded.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
     public static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
     {
         if (assembly == null)
@@ -83,6 +96,18 @@ public class DocParser
         }
     }
 
+    /// <summary>
+    /// Reads one assembly into a model. The bytes are loaded with <see cref="Assembly.Load(byte[])"/>.
+    /// Namespaces and their types are ordered by name. A failure is not thrown: the returned
+    /// model's full name is the path plus the exception message, its id is a stable hash of the
+    /// path, and it has no namespaces.
+    /// </summary>
+    /// <param name="assemblyFile">Path of the assembly.</param>
+    /// <param name="parseXmlCommentsFile">
+    /// When <see langword="false"/>, member comments are left empty. A reader already registered
+    /// by <see cref="PrepareDocumentation"/> is reused.
+    /// </param>
+    /// <returns>The assembly model.</returns>
     public AssemblyModel Parse(string assemblyFile, bool parseXmlCommentsFile = true)
     {
         xmlDocCommentReader = null;

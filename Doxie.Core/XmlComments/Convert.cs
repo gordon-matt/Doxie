@@ -103,6 +103,13 @@ public static class Convert
     /// </returns>
     public static string ToXmlDocCommentMember(EventInfo eventInfo) => ToXmlDocCommentMember(eventInfo, EmptyParameterList).ToString();
 
+    /// <summary>
+    /// Creates the XML doc comment member id for a <see cref="MemberInfo"/> whose compile-time
+    /// type is <see cref="MemberInfo"/>. The prefix is <c>F:</c> and the parameter list is empty.
+    /// A method, constructor, or indexer needs the overload for its concrete type.
+    /// </summary>
+    /// <param name="memberInfo">The member to convert.</param>
+    /// <returns>The member id.</returns>
     public static string ToXmlDocCommentMember(MemberInfo memberInfo) => ToXmlDocCommentMember(memberInfo, EmptyParameterList).ToString();
 
     /// <summary>

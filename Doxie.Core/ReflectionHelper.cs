@@ -4,6 +4,10 @@ using System.Runtime.CompilerServices;
 
 namespace Doxie.Core;
 
+/// <summary>
+/// Formats reflection members the way a C# signature is written. Parameter lists name the
+/// types, not the parameter names.
+/// </summary>
 public static class ReflectionHelper
 {
     private static readonly Dictionary<Type, string> Aliases = new()
@@ -59,6 +63,12 @@ public static class ReflectionHelper
         ["op_Explicit"] = "explicit"
     };
 
+    /// <summary>
+    /// A method signature: short return type, name, and parameter types. The first parameter of
+    /// an extension method is marked <c>this</c>.
+    /// </summary>
+    /// <param name="methodInfo">The method to format.</param>
+    /// <returns>The signature, without parameter names.</returns>
     public static string GetMethodSignature(MethodInfo methodInfo)
     {
         string returnType = FormatReturnType(methodInfo);
@@ -70,6 +80,12 @@ public static class ReflectionHelper
         return $"{returnType} {methodName}({parameters})";
     }
 
+    /// <summary>
+    /// A property signature. An indexer is written as <c>this[...]</c>. The type is the full name,
+    /// and indexer parameters include a default value when they have one.
+    /// </summary>
+    /// <param name="propertyInfo">The property to format.</param>
+    /// <returns>The signature, without parameter names.</returns>
     public static string GetPropertySignature(PropertyInfo propertyInfo)
     {
         string propertyType = FormatType(propertyInfo.PropertyType, fullName: true);
@@ -82,6 +98,11 @@ public static class ReflectionHelper
         return $"{propertyType} {propertyInfo.Name}";
     }
 
+    /// <summary>
+    /// A constructor signature. The type name is short, and a generic arity marker is removed.
+    /// </summary>
+    /// <param name="constructorInfo">The constructor to format. A missing declaring type is named <c>ctor</c>.</param>
+    /// <returns>The signature, without parameter names.</returns>
     public static string GetConstructorSignature(ConstructorInfo constructorInfo)
     {
         string name = constructorInfo.DeclaringType == null
@@ -97,6 +118,13 @@ public static class ReflectionHelper
         return $"{name}({parameters})";
     }
 
+    /// <summary>
+    /// The name shown in a signature. An operator becomes <c>operator +</c>, except
+    /// <c>implicit operator</c> and <c>explicit operator</c>. An unrecognized <c>op_</c> name is
+    /// left as the method name. A generic method appends its type-argument names.
+    /// </summary>
+    /// <param name="method">The method to name.</param>
+    /// <returns>The display name.</returns>
     public static string FormatMethodName(MethodInfo method)
     {
         if (method.IsSpecialName && method.Name.StartsWith("op_", StringComparison.Ordinal))
@@ -117,6 +145,12 @@ public static class ReflectionHelper
         return method.Name;
     }
 
+    /// <summary>
+    /// The short return type. <c>object</c> marked dynamic is written <c>dynamic</c>. A nullable
+    /// reference type gets a trailing <c>?</c>.
+    /// </summary>
+    /// <param name="method">The method whose return type is formatted.</param>
+    /// <returns>The type text.</returns>
     public static string FormatReturnType(MethodInfo method)
     {
         if (IsDynamic(method.ReturnParameter) && method.ReturnType == typeof(object))
@@ -128,6 +162,20 @@ public static class ReflectionHelper
         return IsNullableReference(method.ReturnParameter) ? name + "?" : name;
     }
 
+    /// <summary>
+    /// A parameter's type, with <c>ref</c>, <c>out</c>, <c>in</c>, <c>params</c>, or <c>this</c>
+    /// when they apply. The parameter name is not included. <c>object</c> marked dynamic is
+    /// written <c>dynamic</c>.
+    /// </summary>
+    /// <param name="parameter">The parameter to format.</param>
+    /// <param name="fullName">
+    /// When <see langword="true"/>, the type is the full name and a default value is appended
+    /// when the parameter has one. Reading a default that throws is omitted.
+    /// </param>
+    /// <param name="isExtensionParameter">
+    /// When <see langword="true"/>, the type is prefixed with <c>this</c>.
+    /// </param>
+    /// <returns>The type text.</returns>
     public static string FormatParameter(ParameterInfo parameter, bool fullName, bool isExtensionParameter)
     {
         var type = parameter.ParameterType;
@@ -166,6 +214,18 @@ public static class ReflectionHelper
         return formatted;
     }
 
+    /// <summary>
+    /// A type name. Built-in types use the C# keyword. A <see langword="null"/> type is an empty
+    /// string. A by-ref type is formatted without the <c>ref</c> word. Pointers, arrays, and
+    /// nullable value types keep their suffix. A nested type is written under its declaring type.
+    /// A generic type drops the arity marker and writes its arguments in angle brackets.
+    /// </summary>
+    /// <param name="type">The type to format.</param>
+    /// <param name="fullName">
+    /// When <see langword="true"/>, a non-nested type uses its full name and a generic type
+    /// includes its namespace.
+    /// </param>
+    /// <returns>The type text.</returns>
     public static string FormatType(Type type, bool fullName)
     {
         if (type == null)

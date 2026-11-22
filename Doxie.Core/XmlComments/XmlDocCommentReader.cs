@@ -193,16 +193,21 @@ public sealed class XmlDocCommentReader : IXmlDocCommentReader
     /// </returns>
     public XElement GetComments(MethodInfo methodInfo) => ReadPolicy.ReadMember(Convert.ToXmlDocCommentMember(methodInfo));
 
+    /// <summary>
+    /// Retrieves the XML doc comments for a <see cref="MemberInfo"/> whose compile-time type is
+    /// <see cref="MemberInfo"/>. The id uses the <c>F:</c> prefix and no parameter list, so this
+    /// matches a field and does not match a method or indexer by its parameters. Call the
+    /// overload for the concrete member type instead.
+    /// </summary>
+    /// <param name="memberInfo">The member to look up.</param>
+    /// <returns>The member element, or <see langword="null"/> when that id is absent.</returns>
     public XElement GetComments(MemberInfo memberInfo) => ReadPolicy.ReadMember(Convert.ToXmlDocCommentMember(memberInfo));
 
     #endregion Public Methods
 
     #region Public Properties
 
-    /// <summary>
-    /// Gets the full path to the XML doc comments file that is
-    /// read by the reader.
-    /// </summary>
+    /// <summary>Full path of the XML documentation file this reader was opened with.</summary>
     public string FullPath { get; }
 
     #endregion Public Properties

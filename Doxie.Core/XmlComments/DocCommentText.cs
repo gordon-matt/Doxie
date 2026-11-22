@@ -10,14 +10,31 @@ namespace Doxie.Core.XmlComments;
 /// </summary>
 public static class DocCommentText
 {
+    /// <summary>The text of the first child element with this local name.</summary>
+    /// <param name="parent">Element to search. <see langword="null"/> yields an empty string.</param>
+    /// <param name="localName">Child element name, such as <c>summary</c>.</param>
+    /// <returns>The rendered child, or an empty string when there is no such child.</returns>
     public static string RenderChild(XElement parent, string localName)
     {
         var child = parent?.Elements().FirstOrDefault(element => element.Name.LocalName == localName);
         return child == null ? string.Empty : RenderElement(child);
     }
 
+    /// <summary>
+    /// Renders an element's content. <c>see</c> and <c>paramref</c> become the referenced name,
+    /// <c>c</c> becomes its text, and <c>code</c>, <c>para</c>, and <c>list</c> keep line breaks.
+    /// Leading and trailing blank lines are removed, and a shared indent is stripped.
+    /// </summary>
+    /// <param name="element">Element to render. <see langword="null"/> yields an empty string.</param>
+    /// <returns>The rendered text.</returns>
     public static string RenderElement(XElement element) => element == null ? string.Empty : Normalize(RenderNodes(element.Nodes()));
 
+    /// <summary>
+    /// One line per <c>exception</c> child, as the cref name, the text, or <c>name: text</c>
+    /// when both are present.
+    /// </summary>
+    /// <param name="member">Member element. <see langword="null"/> yields an empty string.</param>
+    /// <returns>The lines, separated by a newline.</returns>
     public static string RenderExceptions(XElement member)
     {
         if (member == null)
@@ -38,6 +55,9 @@ public static class DocCommentText
         return string.Join("\n", parts);
     }
 
+    /// <summary>One line per <c>typeparam</c> child, as <c>name: text</c>.</summary>
+    /// <param name="member">Member element. <see langword="null"/> yields an empty string.</param>
+    /// <returns>The lines, separated by a newline.</returns>
     public static string RenderTypeParameters(XElement member)
     {
         if (member == null)
@@ -58,6 +78,9 @@ public static class DocCommentText
         return string.Join("\n", parts);
     }
 
+    /// <summary>The <c>seealso</c> children, prefixed with <c>See also:</c>.</summary>
+    /// <param name="member">Member element. <see langword="null"/> or no references yields an empty string.</param>
+    /// <returns>The sentence, or an empty string.</returns>
     public static string RenderSeeAlso(XElement member)
     {
         if (member == null)
@@ -73,6 +96,12 @@ public static class DocCommentText
         return string.IsNullOrEmpty(items) ? string.Empty : "See also: " + items;
     }
 
+    /// <summary>
+    /// Whether every child element is <c>inheritdoc</c>. A member with no children, or with any
+    /// other child, is <see langword="false"/>.
+    /// </summary>
+    /// <param name="member">Member element. <see langword="null"/> is <see langword="false"/>.</param>
+    /// <returns><see langword="true"/> when the member is only inheritdoc elements.</returns>
     public static bool IsInheritDoc(XElement member)
     {
         if (member == null)
@@ -84,6 +113,13 @@ public static class DocCommentText
         return children.Count > 0 && children.All(element => element.Name.LocalName == "inheritdoc");
     }
 
+    /// <summary>
+    /// Turns a compiler cref into a readable name. A two-character prefix such as <c>M:</c> is
+    /// removed, the parameter list is removed, <c>+</c> becomes a dot, and a backtick arity
+    /// becomes empty angle brackets with commas.
+    /// </summary>
+    /// <param name="cref">The cref value. Blank yields an empty string.</param>
+    /// <returns>The readable name.</returns>
     public static string FormatCref(string cref)
     {
         if (string.IsNullOrWhiteSpace(cref))

@@ -25,10 +25,19 @@ using System.Xml.Linq;
 
 namespace Doxie.Core.XmlComments;
 
+/// <summary>
+/// Reads one compiler documentation file. A document type definition is rejected. The file is
+/// not checked against the historical documentation schema, so a file that uses later tags is
+/// still loaded.
+/// </summary>
 public class XmlDocCommentReadPolicy : IXmlDocCommentReadPolicy
 {
     private readonly XDocument xDocument;
 
+    /// <summary>Opens the documentation file.</summary>
+    /// <param name="xmlDocCommentsFullPath">Full path of the XML documentation file.</param>
+    /// <exception cref="FileNotFoundException">The file does not exist.</exception>
+    /// <exception cref="XmlException">The file is not XML, or it contains a document type definition.</exception>
     public XmlDocCommentReadPolicy(string xmlDocCommentsFullPath)
     {
         // Compiler documentation files contain tags the historical schema does not describe.
@@ -44,8 +53,11 @@ public class XmlDocCommentReadPolicy : IXmlDocCommentReadPolicy
     }
 
     /// <summary>
-    /// <see cref="IXmlDocCommentReadPolicy.ReadMember"/>
+    /// The <c>member</c> element whose <c>name</c> attribute equals <paramref name="memberName"/>.
     /// </summary>
+    /// <param name="memberName">The compiler member id, such as <c>M:Namespace.Type.Method</c>.</param>
+    /// <returns>A copy of that element, or <see langword="null"/> when the name is absent.</returns>
+    /// <exception cref="InvalidOperationException">More than one member has that name.</exception>
     public XElement ReadMember(string memberName)
     {
         var member = xDocument.Element(XmlDocCommentNames.DocElement)

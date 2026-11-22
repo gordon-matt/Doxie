@@ -5,6 +5,9 @@
 
 namespace Doxie.Core.Models;
 
+/// <summary>
+/// Unused. Exception text is stored on <see cref="BaseCommentsModel.Exceptions"/>.
+/// </summary>
 public class ExceptionModel
 {
 }

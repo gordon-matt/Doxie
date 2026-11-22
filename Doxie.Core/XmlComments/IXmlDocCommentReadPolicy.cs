@@ -40,7 +40,8 @@ public interface IXmlDocCommentReadPolicy
     /// </param>
     ///
     /// <returns>
-    /// An <see cref="XElement"/> containing the requested XML doc comments.
+    /// An <see cref="XElement"/> containing the requested XML doc comments, or
+    /// <see langword="null"/> when that member is not in the store.
     /// </returns>
     XElement ReadMember(string memberName);
 }

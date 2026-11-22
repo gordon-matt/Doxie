@@ -4,8 +4,17 @@ using System.Text;
 
 namespace Doxie.Core.Solutions;
 
+/// <summary>Runs <c>dotnet build</c> so a project can produce an XML documentation file.</summary>
 public static class DotNetBuilder
 {
+    /// <summary>
+    /// Builds a project or solution in Release with <c>GenerateDocumentationFile</c> turned on.
+    /// The working directory is the file's folder. Standard output and standard error are both
+    /// captured.
+    /// </summary>
+    /// <param name="projectOrSolutionPath">Project or solution to build.</param>
+    /// <returns>Whether the process exited with code 0, and the combined log.</returns>
+    /// <exception cref="InvalidOperationException"><c>dotnet</c> could not be started.</exception>
     public static BuildResult Build(string projectOrSolutionPath)
     {
         var start = new ProcessStartInfo
@@ -43,4 +52,7 @@ public static class DotNetBuilder
     }
 }
 
+/// <summary>The outcome of <see cref="DotNetBuilder.Build"/>.</summary>
+/// <param name="Succeeded"><see langword="true"/> when the process exited with code 0.</param>
+/// <param name="Log">Standard output and standard error, in arrival order. Empty when the build printed nothing.</param>
 public sealed record BuildResult(bool Succeeded, string Log);

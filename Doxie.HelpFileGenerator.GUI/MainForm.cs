@@ -4,6 +4,10 @@ using Doxie.Core.Solutions;
 
 namespace Doxie.HelpFileGenerator.GUI;
 
+/// <summary>
+/// The generator window. It lists the projects in a solution, or the assemblies in a folder,
+/// and writes <c>assemblies.json</c> for the ones that are checked.
+/// </summary>
 public sealed class MainForm : Form
 {
     private readonly RadioButton solutionMode = new() { Text = "Solution", Checked = true, AutoSize = true };
@@ -25,6 +29,7 @@ public sealed class MainForm : Form
 
     private bool loading;
 
+    /// <summary>Creates the window. Nothing is selected until a solution or folder is opened.</summary>
     public MainForm()
     {
         Text = "Doxie";

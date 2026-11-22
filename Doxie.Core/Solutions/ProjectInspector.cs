@@ -4,6 +4,7 @@ using System.Xml.Linq;
 
 namespace Doxie.Core.Solutions;
 
+/// <summary>Reads a project file into a <see cref="DocumentationTarget"/>.</summary>
 public static class ProjectInspector
 {
     private static readonly string[] TestPackages =
@@ -16,6 +17,12 @@ public static class ProjectInspector
         "TUnit"
     ];
 
+    /// <summary>
+    /// Reads one project. A missing or unreadable file is still returned, with
+    /// <see cref="DocumentationTarget.Status"/> saying why and no assembly path.
+    /// </summary>
+    /// <param name="projectPath">Path of the project file.</param>
+    /// <returns>The project and the assembly Doxie can document, when one was found.</returns>
     public static DocumentationTarget Inspect(string projectPath)
     {
         string name = Path.GetFileNameWithoutExtension(projectPath);
@@ -90,6 +97,11 @@ public static class ProjectInspector
         };
     }
 
+    /// <summary>
+    /// Inspects every project in a <c>.sln</c> or <c>.slnx</c> file. Solution folders are not projects.
+    /// </summary>
+    /// <param name="solutionPath">Path of the solution file.</param>
+    /// <returns>One target per project. A solution that does not exist yields an empty list.</returns>
     public static IReadOnlyList<DocumentationTarget> InspectSolution(string solutionPath) =>
         SolutionFile.GetProjects(solutionPath).Select(Inspect).ToList();
 

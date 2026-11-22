@@ -4,10 +4,20 @@ using System.Xml.Linq;
 
 namespace Doxie.Core.Solutions;
 
+/// <summary>Lists the projects named by a <c>.sln</c> or <c>.slnx</c> file.</summary>
 public static partial class SolutionFile
 {
     private const string SolutionFolderType = "2150E333-8FDC-42A3-9474-1A3956D46DE8";
 
+    /// <summary>
+    /// Project paths in the solution. A <c>.slnx</c> file is read as XML. A <c>.sln</c> file is
+    /// read from its <c>Project</c> lines, and solution folders are skipped. Only
+    /// <c>.csproj</c>, <c>.vbproj</c>, and <c>.fsproj</c> paths are returned. Comparison is
+    /// ordinal and case-insensitive, and the list is ordered that way.
+    /// </summary>
+    /// <param name="solutionPath">Path of the solution. A missing or blank path yields an empty list.</param>
+    /// <returns>Full paths of the projects.</returns>
+    /// <exception cref="System.Xml.XmlException">A <c>.slnx</c> file is not XML.</exception>
     public static IReadOnlyList<string> GetProjects(string solutionPath)
     {
         if (string.IsNullOrWhiteSpace(solutionPath) || !File.Exists(solutionPath))
